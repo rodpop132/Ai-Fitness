@@ -13,6 +13,15 @@ const PLAN_PRICES = {
   Elite: { monthly: "19.99", yearly: "179.99" },
 };
 
+const COMPARISON_ROWS: Array<{ label: string; tiers: [string | boolean, string | boolean, string | boolean] }> = [
+  { label: "Mensagens diarias com IA", tiers: ["10", "200", "Ilimitadas"] },
+  { label: "Analises de imagem diarias", tiers: ["3", "30", "Ilimitadas"] },
+  { label: "Exportacao de planos em PDF", tiers: [false, true, true] },
+  { label: "Historico completo", tiers: ["7 dias", "Ilimitado", "Ilimitado"] },
+  { label: "Integracao com wearables", tiers: [false, true, "Incluso avancado"] },
+  { label: "Consultoria mensal", tiers: [false, false, true] },
+];
+
 const Pricing = () => {
   const [billingCycle, setBillingCycle] = useState<BillingCycle>("monthly");
 
@@ -21,15 +30,15 @@ const Pricing = () => {
       {
         name: "Free",
         price: PLAN_PRICES.Free[billingCycle],
-        period: billingCycle === "monthly" ? "mês" : "ano",
+        period: billingCycle === "monthly" ? "mes" : "ano",
         description: "Para validar o potencial da NutriFit AI sem compromisso.",
         features: PRICING_FEATURES.free,
-        buttonText: "Começar grátis",
+        buttonText: "Comecar gratis",
       },
       {
         name: "Pro",
         price: PLAN_PRICES.Pro[billingCycle],
-        period: billingCycle === "monthly" ? "mês" : "ano",
+        period: billingCycle === "monthly" ? "mes" : "ano",
         description: "Perfeito para nutricionistas e personal trainers com carteiras ativas.",
         features: PRICING_FEATURES.pro,
         highlighted: true,
@@ -38,8 +47,8 @@ const Pricing = () => {
       {
         name: "Elite",
         price: PLAN_PRICES.Elite[billingCycle],
-        period: billingCycle === "monthly" ? "mês" : "ano",
-        description: "Para equipas e academias que querem automação total e consultoria dedicada.",
+        period: billingCycle === "monthly" ? "mes" : "ano",
+        description: "Para equipas e academias que querem automacao total e consultoria dedicada.",
         features: PRICING_FEATURES.elite,
         buttonText: "Falar com vendas",
       },
@@ -52,12 +61,14 @@ const Pricing = () => {
       <div className="container mx-auto max-w-6xl space-y-16 px-6">
         <section className="text-center">
           <Badge variant="secondary" className="bg-primary/10 text-primary">
-            Preços transparentes
+            Precos transparentes
           </Badge>
-          <h1 className="mt-6 text-4xl font-display font-bold sm:text-5xl">Planos para cada fase do teu projeto</h1>
+          <h1 className="mt-6 text-4xl font-display font-bold sm:text-5xl">
+            Planos para cada fase do teu projeto
+          </h1>
           <p className="mx-auto mt-4 max-w-2xl text-base text-muted-foreground">
             Escolhe o plano que acompanha o teu ritmo de crescimento. Todos incluem acesso ao chatbot, planos inteligentes e
-            integrações com Supabase e Stripe.
+            integracoes com Supabase e Stripe.
           </p>
 
           <div className="mt-8 inline-flex items-center rounded-full border border-primary/30 bg-card/80 p-2 shadow-sm">
@@ -75,7 +86,7 @@ const Pricing = () => {
               className={`rounded-full ${billingCycle === "yearly" ? "gradient-ai text-white shadow-glow" : ""}`}
               onClick={() => setBillingCycle("yearly")}
             >
-              Anual <span className="ml-2 text-xs text-accent">Poupa até 25%</span>
+              Anual <span className="ml-2 text-xs text-accent">Poupa ate 25%</span>
             </Button>
           </div>
         </section>
@@ -102,9 +113,9 @@ const Pricing = () => {
               <Sparkles className="h-5 w-5" />
             </span>
             <div>
-              <h3 className="text-lg font-semibold">Upgrade instantâneo</h3>
+              <h3 className="text-lg font-semibold">Upgrade instantaneo</h3>
               <p className="text-sm text-muted-foreground">
-                Faz upgrade ou downgrade a qualquer momento com faturação proporcional. Sem taxas escondidas.
+                Faz upgrade ou downgrade a qualquer momento com faturacao proporcional. Sem taxas escondidas.
               </p>
             </div>
           </div>
@@ -114,9 +125,9 @@ const Pricing = () => {
               <ShieldCheck className="h-5 w-5" />
             </span>
             <div>
-              <h3 className="text-lg font-semibold">Segurança e compliance</h3>
+              <h3 className="text-lg font-semibold">Seguranca e compliance</h3>
               <p className="text-sm text-muted-foreground">
-                Todos os planos incluem encriptação, backups diários e rotinas alinhadas com RGPD.
+                Todos os planos incluem encriptacao, backups diarios e rotinas alinhadas com RGPD.
               </p>
             </div>
           </div>
@@ -128,14 +139,14 @@ const Pricing = () => {
             <div>
               <h3 className="text-lg font-semibold">Suporte humano</h3>
               <p className="text-sm text-muted-foreground">
-                Fala com especialistas em nutrição e fitness para acelerar a implementação e personalização.
+                Fala com especialistas em nutricao e fitness para acelerar a implementacao e personalizacao.
               </p>
             </div>
           </div>
         </section>
 
         <section className="space-y-6 rounded-3xl border border-border/60 bg-background/60 p-8 shadow-md">
-          <h2 className="text-2xl font-display font-bold text-center">Comparativo rápido de funcionalidades</h2>
+          <h2 className="text-2xl font-display font-bold text-center">Comparativo rapido de funcionalidades</h2>
           <div className="overflow-hidden rounded-2xl border border-border/70">
             <table className="min-w-full divide-y divide-border/60 text-sm">
               <thead className="bg-card/70">
@@ -147,19 +158,20 @@ const Pricing = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-border/40 bg-card/50">
-                {[
-                  { label: "Mensagens diárias com IA", values: ["10", "200", "Ilimitadas"] },
-                  { label: "Análises de imagem diárias", values: ["3", "30", "Ilimitadas"] },
-                  { label: "Exportação de planos em PDF", values: ["—", "✔", "✔"] },
-                  { label: "Histórico completo", values: ["7 dias", "Ilimitado", "Ilimitado"] },
-                  { label: "Integração com wearables", values: ["—", "✔", "✔ Avançado"] },
-                  { label: "Consultoria mensal", values: ["—", "—", "✔"] },
-                ].map((row) => (
+                {COMPARISON_ROWS.map((row) => (
                   <tr key={row.label}>
                     <td className="px-4 py-3 font-medium text-foreground">{row.label}</td>
-                    {row.values.map((value, index) => (
-                      <td key={index} className="px-4 py-3 text-center text-muted-foreground">
-                        {value === "✔" ? <Check className="mx-auto h-4 w-4 text-primary" /> : value}
+                    {row.tiers.map((tier, index) => (
+                      <td key={`${row.label}-${index}`} className="px-4 py-3 text-center text-muted-foreground">
+                        {typeof tier === "boolean" ? (
+                          tier ? (
+                            <Check className="mx-auto h-4 w-4 text-primary" />
+                          ) : (
+                            <span>-</span>
+                          )
+                        ) : (
+                          tier
+                        )}
                       </td>
                     ))}
                   </tr>
