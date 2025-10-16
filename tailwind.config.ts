@@ -93,6 +93,10 @@ export default {
           "0%, 100%": { transform: "scale(0.95)" },
           "50%": { transform: "scale(1.05)" }
         },
+        "glow": {
+          "0%, 100%": { filter: "drop-shadow(0 0 20px hsl(168 100% 39% / 0.4))" },
+          "50%": { filter: "drop-shadow(0 0 40px hsl(168 100% 39% / 0.8))" }
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -101,6 +105,7 @@ export default {
         "slide-up": "slide-up 0.45s ease-out",
         "typing": "typing 1.2s infinite",
         "pulse-heart": "pulse-heart 1.2s ease-in-out infinite",
+        "glow": "glow 2s ease-in-out infinite",
       },
     },
   },
