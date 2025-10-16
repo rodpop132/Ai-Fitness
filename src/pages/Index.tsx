@@ -1,14 +1,26 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useNavigate } from "react-router-dom";
+import { LoadingState } from "@/components/LoadingState";
+import { useEffect, useState } from "react";
 
 const Index = () => {
-  return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
-    </div>
-  );
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate initial loading
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+      navigate("/chat");
+    }, 2500);
+
+    return () => clearTimeout(timer);
+  }, [navigate]);
+
+  if (isLoading) {
+    return <LoadingState message="A preparar o teu espaço saudável..." />;
+  }
+
+  return null;
 };
 
 export default Index;
