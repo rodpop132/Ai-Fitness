@@ -25,15 +25,17 @@ export const ChatSidebar = ({
   onNewChat,
   onSelectChat,
 }: ChatSidebarProps) => {
-  const formatTimestamp = (iso: string) => {
-    const date = new Date(iso);
-    return date.toLocaleString("pt-PT", {
-      hour: "2-digit",
-      minute: "2-digit",
-      day: "2-digit",
-      month: "short",
-    });
-  };
+  const formatTimestamp = (iso?: string) => {
+  if (!iso) return "recentemente";
+  const date = new Date(iso);
+  if (Number.isNaN(date.getTime())) return "recentemente";
+  return date.toLocaleString("pt-PT", {
+    hour: "2-digit",
+    minute: "2-digit",
+    day: "2-digit",
+    month: "short",
+  });
+};
 
   return (
     <aside className="flex h-full w-full max-w-[300px] flex-col border-r border-border/80 bg-sidebar">
@@ -82,7 +84,7 @@ export const ChatSidebar = ({
                     <div className="min-w-0">
                       <p className="truncate text-sm font-semibold">{conversation.title}</p>
                       <div className="mt-1 flex items-center gap-2 text-[11px] uppercase tracking-widest text-muted-foreground">
-                        <span>{conversation.messageCount} mensagens</span>
+                        <span>{conversation.messageCount ?? 0} mensagens</span>
                       </div>
                     </div>
                   </div>
@@ -112,4 +114,6 @@ export const ChatSidebar = ({
     </aside>
   );
 };
+
+
 

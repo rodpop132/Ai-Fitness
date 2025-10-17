@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Activity, Menu, LogOut } from "lucide-react";
+import { Activity, Menu, LogOut, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -25,27 +25,27 @@ export const SiteHeader = () => {
       (!isInternalHash(item.href) && location.pathname === item.href) ||
       (isInternalHash(item.href) && location.pathname === "/" && location.hash === `#${hashTarget}`);
 
-    const baseClass =
+    const linkClass =
       "text-sm font-medium transition-colors hover:text-primary data-[active=true]:text-primary data-[active=true]:font-semibold";
 
     if (isInternalHash(item.href)) {
       return (
-        <a
-          key={item.label}
-          href={item.href}
-          className={`${baseClass} ${mobile ? "block py-2" : ""}`}
-          data-active={isActive}
-        >
+        <a key={item.label} href={item.href} className={`${linkClass} ${mobile ? "block py-2" : ""}`} data-active={isActive}>
           {item.label}
         </a>
       );
     }
 
     return (
-      <Link key={item.label} to={item.href} className={`${baseClass} ${mobile ? "block py-2" : ""}`} data-active={isActive}>
+      <Link key={item.label} to={item.href} className={`${linkClass} ${mobile ? "block py-2" : ""}`} data-active={isActive}>
         {item.label}
       </Link>
     );
+  };
+
+  const handleLogout = async () => {
+    await logout();
+    navigate("/");
   };
 
   return (
@@ -64,13 +64,25 @@ export const SiteHeader = () => {
         <nav className="hidden items-center gap-8 md:flex">
           {navItems.map((item) => renderNavLink(item))}
           {status === "authenticated" && (
-            <Link
-              to="/dashboard"
-              className="text-sm font-medium text-muted-foreground transition hover:text-primary"
-              data-active={location.pathname === "/dashboard"}
-            >
-              Dashboard
-            </Link>
+            <>
+              <Link
+                to="/dashboard"
+                data-active={location.pathname === "/dashboard"}
+                className="text-sm font-medium text-muted-foreground transition hover:text-primary data-[active=true]:text-primary"
+              >
+                Dashboard
+              </Link>
+              {user?.isAdmin && (
+                <Link
+                  to="/admin"
+                  data-active={location.pathname.startsWith("/admin")}
+                  className="flex items-center gap-1 text-sm font-medium text-muted-foreground transition hover:text-primary data-[active=true]:text-primary"
+                >
+                  <ShieldCheck className="h-4 w-4" />
+                  Admin
+                </Link>
+              )}
+            </>
           )}
         </nav>
 
@@ -84,7 +96,9 @@ export const SiteHeader = () => {
                 </span>
                 <div className="flex flex-col leading-tight">
                   <span className="text-xs font-medium text-foreground">{user?.email}</span>
-                  <span className="text-[10px] uppercase tracking-wide text-muted-foreground">Plano {user?.plan}</span>
+                  <span className="text-[10px] uppercase tracking-wide text-muted-foreground">
+                    Plano {user?.plan}
+                  </span>
                 </div>
               </div>
               <Button className="rounded-xl bg-primary text-primary-foreground hover:shadow-glow" onClick={() => navigate("/chat")}>
@@ -93,7 +107,7 @@ export const SiteHeader = () => {
               <Button
                 variant="outline"
                 className="gap-2 rounded-xl border border-destructive/30 text-destructive hover:bg-destructive/10"
-                onClick={() => logout().then(() => navigate("/"))}
+                onClick={handleLogout}
               >
                 <LogOut className="h-4 w-4" />
                 Sair
@@ -124,9 +138,25 @@ export const SiteHeader = () => {
                 <nav className="space-y-2">
                   {navItems.map((item) => renderNavLink(item, true))}
                   {status === "authenticated" && (
-                    <Link to="/dashboard" className="block py-2 text-sm font-medium text-muted-foreground transition hover:text-primary">
-                      Dashboard
-                    </Link>
+                    <>
+                      <Link
+                        to="/dashboard"
+                        className="block py-2 text-sm font-medium text-muted-foreground transition hover:text-primary"
+                        data-active={location.pathname === "/dashboard"}
+                      >
+                        Dashboard
+                      </Link>
+                      {user?.isAdmin && (
+                        <Link
+                          to="/admin"
+                          className="flex items-center gap-2 py-2 text-sm font-medium text-muted-foreground transition hover:text-primary"
+                          data-active={location.pathname.startsWith("/admin")}
+                        >
+                          <ShieldCheck className="h-4 w-4" />
+                          Admin
+                        </Link>
+                      )}
+                    </>
                   )}
                 </nav>
                 {status === "authenticated" ? (
@@ -134,11 +164,7 @@ export const SiteHeader = () => {
                     <Button className="w-full gradient-ai text-white shadow-glow" onClick={() => navigate("/chat")}>
                       Abrir chat
                     </Button>
-                    <Button
-                      variant="outline"
-                      className="w-full gap-2"
-                      onClick={() => logout().then(() => navigate("/"))}
-                    >
+                    <Button variant="outline" className="w-full gap-2" onClick={handleLogout}>
                       <LogOut className="h-4 w-4" />
                       Sair
                     </Button>

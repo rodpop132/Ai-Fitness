@@ -155,6 +155,26 @@ export const api = {
       }),
     );
   },
+
+  async listAdminUsers(token: string, page = 1, pageSize = 50) {
+    const url = new URL(`${API_BASE_URL}/admin/users`);
+    url.searchParams.set("page", String(page));
+    url.searchParams.set("page_size", String(pageSize));
+    return handleResponse<{
+      items: Array<{
+        id: string;
+        email: string;
+        plan: string;
+        created_at: string;
+      }>;
+      page: number;
+      page_size: number;
+    }>(
+      await fetch(url, {
+        headers: buildHeaders(token),
+      }),
+    );
+  },
 };
 
 export type StreamingChunk =
@@ -171,7 +191,7 @@ export async function streamChatCompletion(options: {
 }) {
   const response = await fetch(`${API_BASE_URL}/chat/${options.conversationId}/messages`, {
     method: "POST",
-    headers: buildHeaders(options.token),
+    headers: buildHeaders(options.token, { Accept: "text/event-stream" }),
     body: JSON.stringify({ content: options.content, image_url: options.imageUrl ?? null }),
   });
 

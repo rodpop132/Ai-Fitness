@@ -10,14 +10,15 @@ interface AuthUser {
   plan: string;
   dailyMessagesUsed: number;
   dailyImagesUsed: number;
+  isAdmin: boolean;
 }
 
 interface AuthContextValue {
   status: AuthStatus;
   user: AuthUser | null;
   token: string | null;
-  login: (email: string, password: string) => Promise<void>;
-  signup: (email: string, password: string) => Promise<void>;
+  login: (email: string, password: string) => Promise<AuthUser>;
+  signup: (email: string, password: string) => Promise<AuthUser>;
   logout: () => Promise<void>;
   refreshSession: () => Promise<void>;
   error: string | null;
@@ -44,14 +45,28 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   const mapSession = useCallback(
-    (session: Awaited<ReturnType<typeof api.session>>) => ({
-      id: session.user_id,
-      email: session.email,
-      name: session.name,
-      plan: session.plan,
-      dailyMessagesUsed: session.daily_messages_used,
-      dailyImagesUsed: session.daily_images_used,
-    }),
+    async (session: Awaited<ReturnType<typeof api.session>>, authToken: string): Promise<AuthUser> => {
+      let isAdmin = false;
+      try {
+        await api.listAdminUsers(authToken, 1, 1);
+        isAdmin = true;
+      } catch (err) {
+        const resStatus = (err as ApiError).status;
+        if (resStatus && resStatus >= 500) {
+          console.error("Admin check failed", err);
+        }
+      }
+
+      return {
+        id: session.user_id,
+        email: session.email,
+        name: session.name,
+        plan: session.plan,
+        dailyMessagesUsed: session.daily_messages_used,
+        dailyImagesUsed: session.daily_images_used,
+        isAdmin,
+      };
+    },
     [],
   );
 
@@ -64,7 +79,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setStatus("loading");
     try {
       const session = await api.session(token);
-      setUser(mapSession(session));
+      setUser(await mapSession(session, token));
       setStatus("authenticated");
       setError(null);
     } catch (err) {
@@ -79,15 +94,17 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, [token, mapSession, persistToken]);
 
   const login = useCallback(
-    async (email: string, password: string) => {
+    async (email: string, password: string): Promise<AuthUser> => {
       setStatus("loading");
       try {
         const { token: newToken } = await api.login(email, password);
         persistToken(newToken);
         const session = await api.session(newToken);
-        setUser(mapSession(session));
+        const mapped = await mapSession(session, newToken);
+        setUser(mapped);
         setStatus("authenticated");
         setError(null);
+        return mapped;
       } catch (err) {
         persistToken(null);
         setStatus("unauthenticated");
@@ -104,15 +121,17 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   );
 
   const signup = useCallback(
-    async (email: string, password: string) => {
+    async (email: string, password: string): Promise<AuthUser> => {
       setStatus("loading");
       try {
         const { token: newToken } = await api.signup(email, password);
         persistToken(newToken);
         const session = await api.session(newToken);
-        setUser(mapSession(session));
+        const mapped = await mapSession(session, newToken);
+        setUser(mapped);
         setStatus("authenticated");
         setError(null);
+        return mapped;
       } catch (err) {
         persistToken(null);
         setStatus("unauthenticated");
@@ -169,4 +188,5 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
+
 
