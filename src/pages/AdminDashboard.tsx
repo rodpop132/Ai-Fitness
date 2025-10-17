@@ -16,7 +16,7 @@ interface AdminUserRow {
 }
 
 const AdminDashboard = () => {
-  const { token, user } = useAuth();
+  const { token, user, refreshSession } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -40,7 +40,24 @@ const AdminDashboard = () => {
   }, [user, navigate]);
 
   const fetchUsers = async (pageIndex = page) => {
-    if (!token) return;\n    setLoading(true);\n    setError(null);\n    try {\n      const response = await api.listAdminUsers(token, pageIndex, pageSize);\n      setUsers(response.items);\n      setPage(response.page);\n      setTotal((response.page - 1) * pageSize + response.items.length);\n    } catch (err) {\n      const apiError = err as ApiError;\n      console.error(err);\n      if (apiError?.status === 403) {\n        setError("Sem permissao de administrador para ver esta secao.");\n        navigate("/admin/login", { replace: true });\n      } else {\n        setError("Nao foi possivel carregar os utilizadores.");\n      }\n    } finally {
+    if (!token) return;
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await api.listAdminUsers(token, pageIndex, pageSize);
+      setUsers(response.items);
+      setPage(response.page);
+      setTotal((response.page - 1) * pageSize + response.items.length);
+    } catch (err) {
+      const apiError = err as ApiError;
+      console.error(err);
+      if (apiError?.status === 403) {
+        setError("Sem permissao de administrador para ver esta secao.");
+        navigate("/admin/login", { replace: true });
+      } else {
+        setError("Nao foi possivel carregar os utilizadores.");
+      }
+    } finally {
       setLoading(false);
     }
   };
