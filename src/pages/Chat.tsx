@@ -1,16 +1,10 @@
-<<<<<<< HEAD
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Activity, Brain, Sparkles } from "lucide-react";
-=======
-import { useState } from "react";
-import { Activity } from "lucide-react";
->>>>>>> b70027a8b05f3f1b40cd6b6a2be00ecc89aac79b
 import { ChatSidebar } from "@/components/chat/ChatSidebar";
 import { ChatMessage } from "@/components/chat/ChatMessage";
 import { ChatInput } from "@/components/chat/ChatInput";
 import { UsageCounter } from "@/components/chat/UsageCounter";
 import { ScrollArea } from "@/components/ui/scroll-area";
-<<<<<<< HEAD
 import { Badge } from "@/components/ui/badge";
 import {
   Select,
@@ -53,9 +47,9 @@ const ACTIVE_KEY = "nutrifit-ai-active-conversation";
 
 const QUICK_SUGGESTIONS = [
   "Sugere um plano semanal vegetariano de 1800 kcal",
-  "Analisa este rótulo de barrita proteica",
-  "Cria um treino de força para 3 dias",
-  "Dá-me ideias de snacks sem lactose",
+  "Analisa este rotulo de barrita proteica",
+  "Cria um treino de forca para 3 dias",
+  "Da-me ideias de snacks sem lactose",
 ];
 
 const formatTime = (date: Date) =>
@@ -79,11 +73,11 @@ const createWelcomeMessage = (): StoredMessage => {
     createdAt: now.toISOString(),
     timestamp: formatTime(now),
     content:
-      "Olá! 👋 Sou a NutriFit AI, a tua parceira para planos alimentares, treinos e análise de progresso.\n\nPosso ajudar-te a:\n• Criar planos equilibrados em segundos\n• Analisar fotos de refeições e rótulos\n• Ajustar treinos com base nos teus objetivos\n\nConta-me o que procuras e trato do resto! 💪",
+      "Ola! 👋 Sou a NutriFit AI, pronta para gerar planos alimentares e treinos personalizados.\n\nPosso ajudar com:\n• Planos equilibrados em segundos\n• Analises rapidas de fotos e rotulos\n• Ajustes de treino com base nos teus objetivos\n\nPartilha o que precisas e trato do resto! 💪",
     suggestions: [
       "Preciso de um plano alimentar para ganhar massa magra",
       "Sugere um treino funcional de 30 minutos",
-      "Quais são as macros ideais para mim?",
+      "Quais sao as macros ideais para mim?",
     ],
   };
 };
@@ -138,7 +132,7 @@ const loadConversations = (): Conversation[] => {
       })),
     }));
   } catch (error) {
-    console.warn("Não foi possível recuperar conversas guardadas:", error);
+    console.warn("Nao foi possivel recuperar conversas guardadas:", error);
     return [createInitialConversation()];
   }
 };
@@ -164,39 +158,39 @@ const generateAssistantResponse = (userMessage: string, hasImage: boolean) => {
   if (hasImage) {
     return {
       content:
-        "Obrigada pela imagem! 📸 Vamos olhar rapidamente:\n\n• **Proteína estimada**: peito de frango grelhado (~120g)\n• **Hidratos**: quinoa cozida (~90g)\n• **Vegetais**: espinafres salteados e tomate\n\nSugestão: adiciona uma fonte de gordura saudável (azeite, abacate ou frutos secos) para melhorar a absorção de vitaminas lipossolúveis. Queres que estime macros ou prefires uma alternativa vegetariana?",
+        "Obrigada pela imagem! 📸 Aqui vai uma analise rapida:\n\n• Proteina estimada: peito de frango grelhado (~120g)\n• Hidratos: quinoa cozida (~90g)\n• Vegetais: espinafres salteados e tomate\n\nSugestao: adiciona uma gordura saudavel (azeite, abacate, frutos secos) para otimizar absorcao de vitaminas. Queres macros aproximadas ou uma alternativa vegetariana?",
       suggestions: [
-        "Calcula macros aproximadas para esta refeição",
-        "Sugere uma opção vegetariana equivalente",
-        "Como posso tornar esta refeição mais saciante?",
+        "Calcula macros aproximadas para esta refeicao",
+        "Sugere uma opcao vegetariana equivalente",
+        "Como posso tornar esta refeicao mais saciante?",
       ],
     };
   }
 
   const isTrainingFocus =
     lowerCaseMessage.includes("treino") ||
-    lowerCaseMessage.includes("força") ||
-    lowerCaseMessage.includes("musculação");
+    lowerCaseMessage.includes("forca") ||
+    lowerCaseMessage.includes("musculacao");
   const isNutritionFocus =
     lowerCaseMessage.includes("plano") ||
     lowerCaseMessage.includes("aliment") ||
     lowerCaseMessage.includes("refei");
   const isRestriction =
     lowerCaseMessage.includes("lactose") ||
-    lowerCaseMessage.includes("glúten") ||
+    lowerCaseMessage.includes("gluten") ||
     lowerCaseMessage.includes("sem");
   const isGoalWeight =
     lowerCaseMessage.includes("peso") ||
     lowerCaseMessage.includes("massa") ||
-    lowerCaseMessage.includes("definição");
+    lowerCaseMessage.includes("definicao");
 
   if (isTrainingFocus) {
     return {
       content:
-        "Vamos desenhar um microciclo de treino inteligente! 💪\n\n1. Define o número de dias disponíveis e nível atual.\n2. Distribui padrões de movimento (push, pull, agachamento, core).\n3. Ajusta séries, repetições e carga conforme a meta (hipertrofia, força ou resistência).\n4. Reserva tempo para mobilidade e recuperação ativa.\n\nPartilha quantos dias tens disponíveis e o teu histórico para avançarmos.",
+        "Vamos desenhar um microciclo de treino inteligente! 💪\n\n1. Indica quantos dias tens disponiveis e o teu nivel atual.\n2. Distribuimos movimentos (push, pull, agachamento, core).\n3. Ajustamos series, repeticoes e carga consoante o objetivo.\n4. Reservamos tempo para mobilidade e recuperacao.\n\nConta-me a tua disponibilidade e historico para avancarmos.",
       suggestions: [
-        "Tenho 3 dias disponíveis, nível intermédio",
-        "Quero focar força e prevenir lesões",
+        "Tenho 3 dias disponiveis, nivel intermedio",
+        "Quero focar forca e prevenir lesoes",
         "Adiciona mobilidade para ombros e anca",
       ],
     };
@@ -205,11 +199,11 @@ const generateAssistantResponse = (userMessage: string, hasImage: boolean) => {
   if (isNutritionFocus || isGoalWeight) {
     return {
       content:
-        "Vamos construir um plano alimentar alinhado com os teus objetivos. 🔍\n\n• Primeiro confirmamos dados básicos: idade, peso atual, altura e nível de atividade.\n• Definimos a meta calórica e distribuição de macros.\n• Escolhemos alimentos preferidos e horários habituais.\n• Montamos refeições com opções de substituição.\n\nQueres partilhar dados de base ou preferes que sugira um plano padrão para começar?",
+        "Vamos montar um plano alimentar alinhado com os teus objetivos. 🔍\n\n• Primeiro confirmamos dados basicos: idade, peso, altura, atividade.\n• Definimos meta calorica e distribuicao de macros.\n• Ajustamos a lista de alimentos favoritos e horarios.\n• Criamos refeicoes com substituicoes sugeridas.\n\nPreferes partilhar os teus dados agora ou queres um plano base de exemplo?",
       suggestions: [
-        "Aqui estão os meus dados de base",
+        "Aqui estao os meus dados de base",
         "Sugere um plano low carb de 1800 kcal",
-        "Inclui opções rápidas para almoço",
+        "Inclui opcoes rapidas para almoco",
       ],
     };
   }
@@ -217,21 +211,21 @@ const generateAssistantResponse = (userMessage: string, hasImage: boolean) => {
   if (isRestriction) {
     return {
       content:
-        "Damos prioridade a restrições alimentares e alergias. ✅\n\n• Substituímos ingredientes críticos por alternativas seguras.\n• Garantimos variedade de micronutrientes.\n• Indicamos rótulos a evitar e ideias de snacks.\n\nPosso gerar um plano dedicado ou sugerir receitas específicas. Qual é a tua prioridade agora?",
+        "Vamos garantir que as tuas restricoes sao respeitadas. ✅\n\n• Substituimos ingredientes criticos por alternativas seguras.\n• Mantemos variedade de micronutrientes.\n• Indicamos rotulos a evitar e snacks seguros.\n\nComo queres avançar: plano completo, receitas especificas ou lista de produtos?",
       suggestions: [
-        "Sugere pequeno-almoço sem lactose",
-        "Lista refeições sem glúten para jantar",
-        "Preciso de snacks rápidos e seguros",
+        "Sugere pequeno-almoco sem lactose",
+        "Lista refeicoes sem gluten para jantar",
+        "Preciso de snacks rapidos e seguros",
       ],
     };
   }
 
   return {
     content:
-      "Percebi o teu pedido! A NutriFit AI combina dados nutricionais, objetivos de treino e hábitos reais para criar recomendações personalizadas.\n\nPartilha objetivos (perda de peso, performance, bem-estar), restrições e preferências alimentares. Se tiveres dados de wearables ou registos anteriores, posso incorporá-los também.",
+      "Entendi o teu pedido! A NutriFit AI combina dados nutricionais, objetivos de treino e habitos reais para criar recomendacoes personalizadas.\n\nPartilha objetivos (perda de peso, performance, bem-estar), restricoes e preferencias alimentares. Se tiveres dados de wearables ou registos anteriores, posso integra-los tambem.",
     suggestions: [
       "Quero melhorar performance na corrida",
-      "Preciso de perder peso de forma sustentável",
+      "Preciso de perder peso de forma sustentavel",
       "Explica como integras dados de wearable",
     ],
   };
@@ -250,7 +244,7 @@ const Chat = () => {
       setActiveConversationId(seeded[0].id);
       return;
     }
-  }, [conversations, activeConversationId]);
+  }, [conversations]);
 
   useEffect(() => {
     if (!activeConversationId) {
@@ -406,7 +400,7 @@ const Chat = () => {
                   </Badge>
                 </div>
                 <p className="text-sm text-muted-foreground">
-                  Partilha objetivos, fotos ou métricas e recebe recomendações em segundos.
+                  Partilha objetivos, fotos ou metricas e recebe recomendacoes em segundos.
                 </p>
               </div>
             </div>
@@ -470,116 +464,10 @@ const Chat = () => {
           onSuggestionClick={handleSendMessage}
           disabled={isTyping}
         />
-=======
-
-interface Message {
-  id: string;
-  role: "user" | "assistant";
-  content: string;
-  image?: string;
-  timestamp: string;
-}
-
-const Chat = () => {
-  const [conversations] = useState([
-    { id: "1", title: "Plano de alimentação semanal", date: "Hoje" },
-    { id: "2", title: "Análise de rótulo nutricional", date: "Ontem" },
-    { id: "3", title: "Treino de força para iniciantes", date: "Há 2 dias" },
-  ]);
-
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: "1",
-      role: "assistant",
-      content: "Olá! 👋 Sou o teu assistente de nutrição e treino. Como posso ajudar-te hoje?\n\nPodes:\n• Perguntar sobre planos alimentares\n• Enviar fotos de pratos para análise nutricional\n• Pedir conselhos de treino\n• Esclarecer dúvidas sobre suplementação",
-      timestamp: "14:30",
-    },
-  ]);
-
-  const [isTyping, setIsTyping] = useState(false);
-
-  const handleSendMessage = (content: string, image?: File) => {
-    // Add user message
-    const userMessage: Message = {
-      id: Date.now().toString(),
-      role: "user",
-      content,
-      image: image ? URL.createObjectURL(image) : undefined,
-      timestamp: new Date().toLocaleTimeString("pt-PT", { hour: "2-digit", minute: "2-digit" }),
-    };
-    setMessages((prev) => [...prev, userMessage]);
-
-    // Simulate AI response
-    setIsTyping(true);
-    setTimeout(() => {
-      const aiMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        role: "assistant",
-        content: image 
-          ? "Óptima foto! 📸 Vejo que tens aqui um prato equilibrado.\n\n**O que vejo:**\n• Proteína: Peito de frango grelhado (~150g)\n• Carboidratos: Arroz integral (~100g)\n• Vegetais: Brócolos e cenoura\n\n**Análise nutricional estimada:**\n• Calorias: ~450 kcal\n• Proteína: 45g\n• Carboidratos: 50g\n• Gordura: 8g\n\n💡 **Sugestão:** Adiciona uma fonte de gordura saudável (azeite, abacate) para melhor absorção de vitaminas!"
-          : "Claro! Posso ajudar-te com isso. Para te dar uma resposta mais personalizada, conta-me um pouco sobre:\n\n• Os teus objetivos (perder peso, ganhar massa, manter?)\n• Restrições alimentares\n• Nível de atividade física\n\nAssim consigo criar um plano totalmente adaptado a ti! 💪",
-        timestamp: new Date().toLocaleTimeString("pt-PT", { hour: "2-digit", minute: "2-digit" }),
-      };
-      setMessages((prev) => [...prev, aiMessage]);
-      setIsTyping(false);
-    }, 2000);
-  };
-
-  return (
-    <div className="flex h-screen bg-background">
-      {/* Sidebar */}
-      <ChatSidebar
-        conversations={conversations}
-        currentConversationId="1"
-        onNewChat={() => console.log("New chat")}
-        onSelectChat={(id) => console.log("Select chat", id)}
-      />
-
-      {/* Main Chat Area */}
-      <div className="flex-1 flex flex-col">
-        {/* Header */}
-        <div className="border-b bg-card px-6 py-4">
-          <div className="flex items-center justify-between max-w-4xl mx-auto">
-            <div className="flex items-center gap-2">
-              <Activity className="w-5 h-5 text-primary" />
-              <h1 className="text-lg font-display font-bold">NutriFit AI</h1>
-            </div>
-            
-            <div className="flex-1 max-w-md ml-8">
-              <UsageCounter
-                messagesUsed={7}
-                messagesLimit={10}
-                imagesUsed={2}
-                imagesLimit={3}
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* Messages */}
-        <ScrollArea className="flex-1 px-6 py-6">
-          <div className="max-w-4xl mx-auto space-y-6">
-            {messages.map((message) => (
-              <ChatMessage key={message.id} {...message} />
-            ))}
-            {isTyping && (
-              <ChatMessage
-                role="assistant"
-                content=""
-                isTyping={true}
-              />
-            )}
-          </div>
-        </ScrollArea>
-
-        {/* Input */}
-        <div className="max-w-4xl mx-auto w-full">
-          <ChatInput onSendMessage={handleSendMessage} />
-        </div>
->>>>>>> b70027a8b05f3f1b40cd6b6a2be00ecc89aac79b
       </div>
     </div>
   );
 };
 
 export default Chat;
+
