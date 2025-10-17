@@ -7,11 +7,8 @@ interface ChatMessageProps {
   image?: string;
   timestamp?: string;
   isTyping?: boolean;
-<<<<<<< HEAD
   suggestions?: string[];
   onSuggestionClick?: (suggestion: string) => void;
-=======
->>>>>>> b70027a8b05f3f1b40cd6b6a2be00ecc89aac79b
 }
 
 export const ChatMessage = ({
@@ -20,17 +17,13 @@ export const ChatMessage = ({
   image,
   timestamp,
   isTyping = false,
-<<<<<<< HEAD
   suggestions,
   onSuggestionClick,
-=======
->>>>>>> b70027a8b05f3f1b40cd6b6a2be00ecc89aac79b
 }: ChatMessageProps) => {
   const isUser = role === "user";
 
   return (
     <div className={`flex ${isUser ? "justify-end" : "justify-start"} animate-fade-in`}>
-<<<<<<< HEAD
       <div className={`max-w-[80%] space-y-3 ${isUser ? "items-end" : "items-start"}`}>
         <div className={`flex items-center gap-2 ${isUser ? "flex-row-reverse" : "flex-row"}`}>
           <div
@@ -66,50 +59,12 @@ export const ChatMessage = ({
               <span className="h-2 w-2 rounded-full bg-current animate-typing" style={{ animationDelay: "0s" }} />
               <span className="h-2 w-2 rounded-full bg-current animate-typing" style={{ animationDelay: "0.2s" }} />
               <span className="h-2 w-2 rounded-full bg-current animate-typing" style={{ animationDelay: "0.4s" }} />
-=======
-      <div className={`max-w-[80%] space-y-2 ${isUser ? "items-end" : "items-start"}`}>
-        {/* Header */}
-        <div className={`flex items-center gap-2 ${isUser ? "flex-row-reverse" : "flex-row"}`}>
-          <div className={`w-7 h-7 rounded-full flex items-center justify-center ${
-            isUser ? "bg-primary text-primary-foreground" : "gradient-ai text-white"
-          }`}>
-            {isUser ? <User className="w-4 h-4" /> : <Bot className="w-4 h-4" />}
-          </div>
-          <span className="text-xs text-muted-foreground font-medium">
-            {isUser ? "Tu" : "NutriFit AI"}
-          </span>
-          {timestamp && (
-            <span className="text-xs text-muted-foreground">• {timestamp}</span>
-          )}
-        </div>
-
-        {/* Message Content */}
-        <div className={`rounded-2xl p-4 ${
-          isUser 
-            ? "bg-primary/10 border border-primary/20" 
-            : "gradient-ai text-white shadow-glow"
-        }`}>
-          {image && (
-            <img 
-              src={image} 
-              alt="Uploaded" 
-              className="rounded-lg mb-3 max-w-full hover:scale-105 transition-transform duration-300 cursor-pointer"
-            />
-          )}
-          
-          {isTyping ? (
-            <div className="flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-current animate-typing" style={{ animationDelay: "0s" }} />
-              <span className="w-2 h-2 rounded-full bg-current animate-typing" style={{ animationDelay: "0.2s" }} />
-              <span className="w-2 h-2 rounded-full bg-current animate-typing" style={{ animationDelay: "0.4s" }} />
->>>>>>> b70027a8b05f3f1b40cd6b6a2be00ecc89aac79b
             </div>
           ) : (
             <p className="text-sm leading-relaxed whitespace-pre-wrap">{content}</p>
           )}
         </div>
 
-<<<<<<< HEAD
         {!isUser && !isTyping && suggestions && suggestions.length > 0 && (
           <div className="flex flex-wrap gap-2">
             {suggestions.map((suggestion) => (
@@ -131,24 +86,6 @@ export const ChatMessage = ({
             </Button>
             <Button variant="ghost" size="sm" className="h-7 w-7 p-0 text-muted-foreground hover:text-primary">
               <ThumbsDown className="h-3.5 w-3.5" />
-=======
-        {/* Feedback Buttons (only for AI messages) */}
-        {!isUser && !isTyping && (
-          <div className="flex items-center gap-1">
-            <Button 
-              variant="ghost" 
-              size="sm"
-              className="h-7 w-7 p-0 hover:bg-muted"
-            >
-              <ThumbsUp className="w-3.5 h-3.5" />
-            </Button>
-            <Button 
-              variant="ghost" 
-              size="sm"
-              className="h-7 w-7 p-0 hover:bg-muted"
-            >
-              <ThumbsDown className="w-3.5 h-3.5" />
->>>>>>> b70027a8b05f3f1b40cd6b6a2be00ecc89aac79b
             </Button>
           </div>
         )}
@@ -156,7 +93,4 @@ export const ChatMessage = ({
     </div>
   );
 };
-<<<<<<< HEAD
 
-=======
->>>>>>> b70027a8b05f3f1b40cd6b6a2be00ecc89aac79b

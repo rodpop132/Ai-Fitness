@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { Plus, MessageCircle, Sparkles, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -15,15 +14,6 @@ interface ConversationSummary {
 
 interface ChatSidebarProps {
   conversations: ConversationSummary[];
-=======
-import { Plus, MessageSquare, Settings, CreditCard, LogOut } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Separator } from "@/components/ui/separator";
-
-interface ChatSidebarProps {
-  conversations: Array<{ id: string; title: string; date: string }>;
->>>>>>> b70027a8b05f3f1b40cd6b6a2be00ecc89aac79b
   currentConversationId?: string;
   onNewChat: () => void;
   onSelectChat: (id: string) => void;
@@ -35,7 +25,6 @@ export const ChatSidebar = ({
   onNewChat,
   onSelectChat,
 }: ChatSidebarProps) => {
-<<<<<<< HEAD
   const formatTimestamp = (iso: string) => {
     const date = new Date(iso);
     return date.toLocaleString("pt-PT", {
@@ -69,7 +58,7 @@ export const ChatSidebar = ({
           {conversations.length === 0 && (
             <div className="rounded-2xl border border-dashed border-border/70 bg-card/70 p-4 text-center text-sm text-muted-foreground">
               <Sparkles className="mx-auto mb-3 h-5 w-5 text-primary" />
-              <p>Começa um chat para gerar planos ou analisar refeições.</p>
+              <p>Comeca um chat para gerar planos ou analisar refeicoes.</p>
             </div>
           )}
 
@@ -110,7 +99,7 @@ export const ChatSidebar = ({
 
       <div className="space-y-3 border-t border-border/70 p-4">
         <p className="text-xs text-muted-foreground">
-          O chatbot aprende com as tuas interações. Partilha feedback para acelerar melhorias.
+          O chatbot aprende com as tuas interacoes. Partilha feedback para acelerar melhorias.
         </p>
         <Separator />
         <div className="flex items-center justify-between text-xs text-muted-foreground">
@@ -124,64 +113,3 @@ export const ChatSidebar = ({
   );
 };
 
-=======
-  return (
-    <div className="h-screen w-[280px] bg-card border-r flex flex-col">
-      {/* Header */}
-      <div className="p-4">
-        <Button 
-          onClick={onNewChat}
-          className="w-full gradient-ai text-white hover:opacity-90 hover-scale shadow-glow"
-          size="lg"
-        >
-          <Plus className="w-4 h-4 mr-2" />
-          Novo Chat
-        </Button>
-      </div>
-
-      {/* Conversations List */}
-      <ScrollArea className="flex-1 px-2">
-        <div className="space-y-1 py-2">
-          {conversations.map((conv) => (
-            <button
-              key={conv.id}
-              onClick={() => onSelectChat(conv.id)}
-              className={`w-full text-left px-3 py-2.5 rounded-lg transition-all duration-200 group hover:bg-secondary ${
-                currentConversationId === conv.id 
-                  ? 'bg-primary/10 border border-primary/20' 
-                  : 'hover:bg-secondary'
-              }`}
-            >
-              <div className="flex items-start gap-2">
-                <MessageSquare className="w-4 h-4 mt-0.5 text-primary shrink-0" />
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium truncate">{conv.title}</p>
-                  <p className="text-xs text-muted-foreground mt-0.5">{conv.date}</p>
-                </div>
-              </div>
-            </button>
-          ))}
-        </div>
-      </ScrollArea>
-
-      <Separator />
-
-      {/* Footer Actions */}
-      <div className="p-4 space-y-1">
-        <Button variant="ghost" className="w-full justify-start" size="sm">
-          <Settings className="w-4 h-4 mr-2" />
-          Definições
-        </Button>
-        <Button variant="ghost" className="w-full justify-start" size="sm">
-          <CreditCard className="w-4 h-4 mr-2" />
-          Preços
-        </Button>
-        <Button variant="ghost" className="w-full justify-start text-destructive hover:text-destructive hover:bg-destructive/10" size="sm">
-          <LogOut className="w-4 h-4 mr-2" />
-          Sair
-        </Button>
-      </div>
-    </div>
-  );
-};
->>>>>>> b70027a8b05f3f1b40cd6b6a2be00ecc89aac79b
