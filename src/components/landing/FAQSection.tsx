@@ -8,7 +8,7 @@ export const FAQSection = () => {
         <span className="text-sm font-semibold uppercase tracking-widest text-primary/80">FAQ</span>
         <h2 className="text-3xl font-display font-bold">Perguntas frequentes</h2>
         <p className="text-sm text-muted-foreground">
-          Mantemos um repositório de respostas atualizado. Se a tua dúvida não estiver aqui, envia-nos uma mensagem.
+          Mantemos um repositorio de respostas atualizado. Se a tua duvida nao estiver aqui, envia-nos uma mensagem.
         </p>
       </div>
 

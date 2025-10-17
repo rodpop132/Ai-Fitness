@@ -1,8 +1,9 @@
-import { Link, useLocation } from "react-router-dom";
-import { Activity, Menu } from "lucide-react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Activity, Menu, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { useAuth } from "@/hooks/useAuth";
 
 const navItems = [
   { label: "Funcionalidades", href: "/#features" },
@@ -15,6 +16,8 @@ const isInternalHash = (href: string) => href.includes("#");
 
 export const SiteHeader = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { status, user, logout } = useAuth();
 
   const renderNavLink = (item: (typeof navItems)[number], mobile = false) => {
     const hashTarget = item.href.split("#")[1] ?? "";
@@ -58,13 +61,54 @@ export const SiteHeader = () => {
           </div>
         </Link>
 
-        <nav className="hidden items-center gap-8 md:flex">{navItems.map((item) => renderNavLink(item))}</nav>
+        <nav className="hidden items-center gap-8 md:flex">
+          {navItems.map((item) => renderNavLink(item))}
+          {status === "authenticated" && (
+            <Link
+              to="/dashboard"
+              className="text-sm font-medium text-muted-foreground transition hover:text-primary"
+              data-active={location.pathname === "/dashboard"}
+            >
+              Dashboard
+            </Link>
+          )}
+        </nav>
 
         <div className="hidden items-center gap-3 md:flex">
           <ThemeToggle />
-          <Button asChild variant="default" className="gradient-ai text-white shadow-glow">
-            <Link to="/chat">Iniciar chat</Link>
-          </Button>
+          {status === "authenticated" ? (
+            <>
+              <div className="flex items-center gap-2 rounded-full border border-border/70 bg-card/80 px-3 py-1">
+                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/15 text-sm font-semibold text-primary">
+                  {user?.email?.slice(0, 1).toUpperCase()}
+                </span>
+                <div className="flex flex-col leading-tight">
+                  <span className="text-xs font-medium text-foreground">{user?.email}</span>
+                  <span className="text-[10px] uppercase tracking-wide text-muted-foreground">Plano {user?.plan}</span>
+                </div>
+              </div>
+              <Button className="rounded-xl bg-primary text-primary-foreground hover:shadow-glow" onClick={() => navigate("/chat")}>
+                Abrir chat
+              </Button>
+              <Button
+                variant="outline"
+                className="gap-2 rounded-xl border border-destructive/30 text-destructive hover:bg-destructive/10"
+                onClick={() => logout().then(() => navigate("/"))}
+              >
+                <LogOut className="h-4 w-4" />
+                Sair
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button variant="ghost" onClick={() => navigate("/login")}>
+                Login
+              </Button>
+              <Button className="rounded-xl bg-primary text-primary-foreground hover:shadow-glow" onClick={() => navigate("/signup")}>
+                Criar conta
+              </Button>
+            </>
+          )}
         </div>
 
         <div className="flex items-center gap-2 md:hidden">
@@ -77,13 +121,38 @@ export const SiteHeader = () => {
             </SheetTrigger>
             <SheetContent side="right" className="w-[280px]">
               <div className="mt-8 space-y-6">
-                <nav className="space-y-2">{navItems.map((item) => renderNavLink(item, true))}</nav>
-                <Button asChild className="w-full gradient-ai text-white shadow-glow">
-                  <Link to="/chat">Iniciar chat</Link>
-                </Button>
-                <Button asChild variant="outline" className="w-full">
-                  <Link to="/pricing">Ver planos</Link>
-                </Button>
+                <nav className="space-y-2">
+                  {navItems.map((item) => renderNavLink(item, true))}
+                  {status === "authenticated" && (
+                    <Link to="/dashboard" className="block py-2 text-sm font-medium text-muted-foreground transition hover:text-primary">
+                      Dashboard
+                    </Link>
+                  )}
+                </nav>
+                {status === "authenticated" ? (
+                  <>
+                    <Button className="w-full gradient-ai text-white shadow-glow" onClick={() => navigate("/chat")}>
+                      Abrir chat
+                    </Button>
+                    <Button
+                      variant="outline"
+                      className="w-full gap-2"
+                      onClick={() => logout().then(() => navigate("/"))}
+                    >
+                      <LogOut className="h-4 w-4" />
+                      Sair
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button className="w-full gradient-ai text-white shadow-glow" onClick={() => navigate("/signup")}>
+                      Criar conta
+                    </Button>
+                    <Button variant="outline" className="w-full" onClick={() => navigate("/login")}>
+                      Login
+                    </Button>
+                  </>
+                )}
               </div>
             </SheetContent>
           </Sheet>
@@ -92,3 +161,4 @@ export const SiteHeader = () => {
     </header>
   );
 };
+

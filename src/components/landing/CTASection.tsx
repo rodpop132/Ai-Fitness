@@ -11,13 +11,13 @@ export const CTASection = () => {
           Pronto para automatizar o acompanhamento nutricional e de treino?
         </h2>
         <p className="text-base text-muted-foreground">
-          Lança o teu workspace em minutos, integra as ferramentas que já usas e oferece um copiloto inteligente a cada pessoa que
+          Lanca o teu workspace em minutos, integra as ferramentas que ja usas e oferece um copiloto inteligente a cada pessoa que
           acompanhas.
         </p>
         <div className="flex flex-wrap items-center justify-center gap-4">
           <Button asChild size="lg" className="gradient-ai text-white shadow-glow-strong">
             <Link to="/chat">
-              Começar agora
+              Comecar agora
               <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
           </Button>

@@ -14,371 +14,332 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/hooks/useAuth";
+import { api, streamChatCompletion, StreamingChunk } from "@/lib/api";
 
 type Role = "user" | "assistant";
 
-interface StoredMessage {
+interface ChatDisplayMessage {
   id: string;
   role: Role;
   content: string;
-  image?: string;
+  imageUrl?: string | null;
   timestamp: string;
-  createdAt: string;
   suggestions?: string[];
+  pending?: boolean;
 }
 
-interface Conversation {
+interface ConversationSummary {
   id: string;
   title: string;
   createdAt: string;
-  updatedAt: string;
-  messages: StoredMessage[];
-  usage: {
-    messagesUsed: number;
-    messagesLimit: number;
-    imagesUsed: number;
-    imagesLimit: number;
-    resetTime: string;
-  };
+  updatedAt?: string;
+  messageCount: number;
 }
 
-const STORAGE_KEY = "nutrifit-ai-chat-v1";
-const ACTIVE_KEY = "nutrifit-ai-active-conversation";
+interface UsageSnapshot {
+  messagesUsed: number;
+  messagesLimit: number;
+  imagesUsed: number;
+  imagesLimit: number;
+  resetTime: string;
+}
 
-const QUICK_SUGGESTIONS = [
-  "Sugere um plano semanal vegetariano de 1800 kcal",
-  "Analisa este rotulo de barrita proteica",
-  "Cria um treino de forca para 3 dias",
-  "Da-me ideias de snacks sem lactose",
-];
+const PLAN_LIMITS: Record<string, { messages: number; images: number }> = {
+  free: { messages: 10, images: 3 },
+  pro: { messages: 200, images: 30 },
+  elite: { messages: 1000, images: 100 },
+};
 
-const formatTime = (date: Date) =>
-  date.toLocaleTimeString("pt-PT", {
+const formatTimestamp = (timestamp?: string) => {
+  if (!timestamp) return "";
+  const date = new Date(timestamp);
+  return date.toLocaleTimeString("pt-PT", {
     hour: "2-digit",
     minute: "2-digit",
   });
-
-const safeRandomId = () => {
-  if (typeof crypto !== "undefined" && "randomUUID" in crypto) {
-    return crypto.randomUUID();
-  }
-  return `${Date.now()}-${Math.random().toString(16).slice(2)}`;
 };
 
-const createWelcomeMessage = (): StoredMessage => {
-  const now = new Date();
-  return {
-    id: safeRandomId(),
-    role: "assistant",
-    createdAt: now.toISOString(),
-    timestamp: formatTime(now),
-    content:
-      "Ola! 👋 Sou a NutriFit AI, pronta para gerar planos alimentares e treinos personalizados.\n\nPosso ajudar com:\n• Planos equilibrados em segundos\n• Analises rapidas de fotos e rotulos\n• Ajustes de treino com base nos teus objetivos\n\nPartilha o que precisas e trato do resto! 💪",
-    suggestions: [
-      "Preciso de um plano alimentar para ganhar massa magra",
-      "Sugere um treino funcional de 30 minutos",
-      "Quais sao as macros ideais para mim?",
-    ],
-  };
-};
-
-const createInitialConversation = (): Conversation => {
-  const welcomeMessage = createWelcomeMessage();
-  return {
-    id: safeRandomId(),
-    title: "Conversa inicial",
-    createdAt: welcomeMessage.createdAt,
-    updatedAt: welcomeMessage.createdAt,
-    messages: [welcomeMessage],
-    usage: {
-      messagesUsed: 0,
-      messagesLimit: 200,
-      imagesUsed: 0,
-      imagesLimit: 30,
-      resetTime: "00:00",
-    },
-  };
-};
-
-const loadConversations = (): Conversation[] => {
-  if (typeof window === "undefined") {
-    return [createInitialConversation()];
-  }
-
-  const stored = window.localStorage.getItem(STORAGE_KEY);
-  if (!stored) {
-    return [createInitialConversation()];
-  }
-
-  try {
-    const parsed: Conversation[] = JSON.parse(stored);
-    if (!Array.isArray(parsed) || parsed.length === 0) {
-      return [createInitialConversation()];
-    }
-
-    return parsed.map((conversation) => ({
-      ...conversation,
-      usage:
-        conversation.usage ?? {
-          messagesUsed: 0,
-          messagesLimit: 200,
-          imagesUsed: 0,
-          imagesLimit: 30,
-          resetTime: "00:00",
-        },
-      messages: (conversation.messages ?? []).map((message) => ({
-        ...message,
-        suggestions: message.suggestions ?? [],
-      })),
-    }));
-  } catch (error) {
-    console.warn("Nao foi possivel recuperar conversas guardadas:", error);
-    return [createInitialConversation()];
-  }
-};
-
-const loadActiveConversationId = (conversations: Conversation[]): string | undefined => {
-  if (typeof window === "undefined") return conversations[0]?.id;
-  const stored = window.localStorage.getItem(ACTIVE_KEY);
-  if (stored && conversations.some((conversation) => conversation.id === stored)) {
-    return stored;
-  }
-  return conversations[0]?.id;
-};
-
-const generateTitleFromMessage = (message: string) => {
-  const cleaned = message.replace(/\s+/g, " ").trim();
-  if (!cleaned) return "Nova conversa";
-  return cleaned.length > 42 ? `${cleaned.slice(0, 42)}…` : cleaned;
-};
-
-const generateAssistantResponse = (userMessage: string, hasImage: boolean) => {
-  const lowerCaseMessage = userMessage.toLowerCase();
-
-  if (hasImage) {
-    return {
-      content:
-        "Obrigada pela imagem! 📸 Aqui vai uma analise rapida:\n\n• Proteina estimada: peito de frango grelhado (~120g)\n• Hidratos: quinoa cozida (~90g)\n• Vegetais: espinafres salteados e tomate\n\nSugestao: adiciona uma gordura saudavel (azeite, abacate, frutos secos) para otimizar absorcao de vitaminas. Queres macros aproximadas ou uma alternativa vegetariana?",
-      suggestions: [
-        "Calcula macros aproximadas para esta refeicao",
-        "Sugere uma opcao vegetariana equivalente",
-        "Como posso tornar esta refeicao mais saciante?",
-      ],
-    };
-  }
-
-  const isTrainingFocus =
-    lowerCaseMessage.includes("treino") ||
-    lowerCaseMessage.includes("forca") ||
-    lowerCaseMessage.includes("musculacao");
-  const isNutritionFocus =
-    lowerCaseMessage.includes("plano") ||
-    lowerCaseMessage.includes("aliment") ||
-    lowerCaseMessage.includes("refei");
-  const isRestriction =
-    lowerCaseMessage.includes("lactose") ||
-    lowerCaseMessage.includes("gluten") ||
-    lowerCaseMessage.includes("sem");
-  const isGoalWeight =
-    lowerCaseMessage.includes("peso") ||
-    lowerCaseMessage.includes("massa") ||
-    lowerCaseMessage.includes("definicao");
-
-  if (isTrainingFocus) {
-    return {
-      content:
-        "Vamos desenhar um microciclo de treino inteligente! 💪\n\n1. Indica quantos dias tens disponiveis e o teu nivel atual.\n2. Distribuimos movimentos (push, pull, agachamento, core).\n3. Ajustamos series, repeticoes e carga consoante o objetivo.\n4. Reservamos tempo para mobilidade e recuperacao.\n\nConta-me a tua disponibilidade e historico para avancarmos.",
-      suggestions: [
-        "Tenho 3 dias disponiveis, nivel intermedio",
-        "Quero focar forca e prevenir lesoes",
-        "Adiciona mobilidade para ombros e anca",
-      ],
-    };
-  }
-
-  if (isNutritionFocus || isGoalWeight) {
-    return {
-      content:
-        "Vamos montar um plano alimentar alinhado com os teus objetivos. 🔍\n\n• Primeiro confirmamos dados basicos: idade, peso, altura, atividade.\n• Definimos meta calorica e distribuicao de macros.\n• Ajustamos a lista de alimentos favoritos e horarios.\n• Criamos refeicoes com substituicoes sugeridas.\n\nPreferes partilhar os teus dados agora ou queres um plano base de exemplo?",
-      suggestions: [
-        "Aqui estao os meus dados de base",
-        "Sugere um plano low carb de 1800 kcal",
-        "Inclui opcoes rapidas para almoco",
-      ],
-    };
-  }
-
-  if (isRestriction) {
-    return {
-      content:
-        "Vamos garantir que as tuas restricoes sao respeitadas. ✅\n\n• Substituimos ingredientes criticos por alternativas seguras.\n• Mantemos variedade de micronutrientes.\n• Indicamos rotulos a evitar e snacks seguros.\n\nComo queres avançar: plano completo, receitas especificas ou lista de produtos?",
-      suggestions: [
-        "Sugere pequeno-almoco sem lactose",
-        "Lista refeicoes sem gluten para jantar",
-        "Preciso de snacks rapidos e seguros",
-      ],
-    };
-  }
-
-  return {
-    content:
-      "Entendi o teu pedido! A NutriFit AI combina dados nutricionais, objetivos de treino e habitos reais para criar recomendacoes personalizadas.\n\nPartilha objetivos (perda de peso, performance, bem-estar), restricoes e preferencias alimentares. Se tiveres dados de wearables ou registos anteriores, posso integra-los tambem.",
-    suggestions: [
-      "Quero melhorar performance na corrida",
-      "Preciso de perder peso de forma sustentavel",
-      "Explica como integras dados de wearable",
-    ],
-  };
-};
+const fallbackSuggestions = [
+  "Cria um plano alimentar low carb",
+  "Sugere treino funcional de 30 minutos",
+  "Analisa o meu ultimo dia de refeicoes",
+  "Quais macros ideais para perda de peso",
+];
 
 const Chat = () => {
-  const [conversations, setConversations] = useState<Conversation[]>(() => loadConversations());
-  const [activeConversationId, setActiveConversationId] = useState<string | undefined>(undefined);
-  const [isTyping, setIsTyping] = useState(false);
+  const { token, user, refreshSession } = useAuth();
+  const [conversations, setConversations] = useState<ConversationSummary[]>([]);
+  const [activeConversationId, setActiveConversationId] = useState<string | null>(null);
+  const [messagesByConversation, setMessagesByConversation] = useState<Record<string, ChatDisplayMessage[]>>({});
+  const [isLoadingConversations, setIsLoadingConversations] = useState(false);
+  const [isLoadingMessages, setIsLoadingMessages] = useState(false);
+  const [isStreaming, setIsStreaming] = useState(false);
+  const [banner, setBanner] = useState<string | null>(null);
   const scrollAnchorRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (conversations.length === 0) {
-      const seeded = [createInitialConversation()];
-      setConversations(seeded);
-      setActiveConversationId(seeded[0].id);
-      return;
-    }
-  }, [conversations]);
+  const usage = useMemo<UsageSnapshot>(() => {
+    const limits = PLAN_LIMITS[user?.plan ?? "free"] ?? PLAN_LIMITS.free;
+    return {
+      messagesUsed: user?.dailyMessagesUsed ?? 0,
+      messagesLimit: limits.messages,
+      imagesUsed: user?.dailyImagesUsed ?? 0,
+      imagesLimit: limits.images,
+      resetTime: "00:00",
+    };
+  }, [user]);
 
   useEffect(() => {
-    if (!activeConversationId) {
-      const initialId = loadActiveConversationId(conversations);
-      if (initialId) {
-        setActiveConversationId(initialId);
+    if (!token) return;
+
+    const loadConversations = async () => {
+      setIsLoadingConversations(true);
+      try {
+        const result = await api.listConversations(token, 1, 50);
+        const mapped: ConversationSummary[] = result.items.map((item) => ({
+          id: item.id,
+          title: item.title || "Conversa sem titulo",
+          createdAt: item.created_at,
+          updatedAt: item.updated_at,
+          messageCount: 0,
+        }));
+        setConversations(mapped);
+        if (mapped.length > 0) {
+          setActiveConversationId((prev) => prev ?? mapped[0].id);
+        }
+      } catch (error) {
+        console.error("Falha a carregar conversas", error);
+        setBanner("Nao foi possivel carregar conversas. Tenta novamente.");
+      } finally {
+        setIsLoadingConversations(false);
       }
-    }
-  }, [conversations, activeConversationId]);
+    };
+
+    loadConversations();
+  }, [token]);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(conversations));
-    }
-  }, [conversations]);
+    if (!activeConversationId || !token) return;
+    if (messagesByConversation[activeConversationId]) return;
 
-  useEffect(() => {
-    if (typeof window !== "undefined" && activeConversationId) {
-      window.localStorage.setItem(ACTIVE_KEY, activeConversationId);
-    }
-  }, [activeConversationId]);
+    const loadMessages = async () => {
+      setIsLoadingMessages(true);
+      try {
+        const data = await api.fetchConversationMessages(token, activeConversationId);
+        const remoteMessages: ChatDisplayMessage[] = Array.isArray(data?.messages)
+          ? data.messages.map((msg: any) => ({
+              id: msg.id ?? crypto.randomUUID(),
+              role: msg.role ?? "assistant",
+              content: msg.content ?? "",
+              imageUrl: msg.image_url ?? null,
+              timestamp: formatTimestamp(msg.created_at),
+              suggestions: msg.suggestions ?? [],
+            }))
+          : [];
 
-  const activeConversation = useMemo(
-    () => conversations.find((conversation) => conversation.id === activeConversationId),
-    [conversations, activeConversationId],
-  );
+        setMessagesByConversation((prev) => ({
+          ...prev,
+          [activeConversationId]: remoteMessages,
+        }));
+        setConversations((prev) =>
+          prev.map((conv) =>
+            conv.id === activeConversationId ? { ...conv, messageCount: remoteMessages.length } : conv,
+          ),
+        );
+      } catch (error) {
+        console.warn("Nao foi possivel obter mensagens da conversa", error);
+        setMessagesByConversation((prev) => ({
+          ...prev,
+          [activeConversationId]: [],
+        }));
+      } finally {
+        setIsLoadingMessages(false);
+      }
+    };
+
+    loadMessages();
+  }, [activeConversationId, token, messagesByConversation]);
 
   useEffect(() => {
     if (scrollAnchorRef.current) {
       scrollAnchorRef.current.scrollIntoView({ behavior: "smooth" });
     }
-  }, [activeConversation?.messages.length, isTyping]);
+  }, [messagesByConversation, activeConversationId, isStreaming]);
 
-  const sidebarConversations = conversations.map((conversation) => ({
-    id: conversation.id,
-    title: conversation.title,
-    updatedAt: conversation.updatedAt,
-    createdAt: conversation.createdAt,
-    messageCount: conversation.messages.length,
-  }));
+  const currentMessages = activeConversationId ? messagesByConversation[activeConversationId] ?? [] : [];
 
-  const handleNewChat = () => {
-    const newConversation = createInitialConversation();
-    setConversations((prev) => [newConversation, ...prev]);
-    setActiveConversationId(newConversation.id);
+  const updateMessages = (conversationId: string, updater: (messages: ChatDisplayMessage[]) => ChatDisplayMessage[]) => {
+    setMessagesByConversation((prev) => ({
+      ...prev,
+      [conversationId]: updater(prev[conversationId] ?? []),
+    }));
+  };
+
+  const handleNewChat = async (): Promise<string | undefined> => {
+    if (!token) return undefined;
+    try {
+      const created = await api.createConversation(token, "Nova conversa");
+      const summary: ConversationSummary = {
+        id: created.id,
+        title: created.title,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        messageCount: 0,
+      };
+      setConversations((prev) => [summary, ...prev]);
+      setMessagesByConversation((prev) => ({ ...prev, [summary.id]: [] }));
+      setActiveConversationId(summary.id);
+      return summary.id;
+    } catch (error) {
+      console.error("Nao foi possivel criar conversa", error);
+      setBanner("Erro ao criar nova conversa. Tenta novamente.");
+      return undefined;
+    }
   };
 
   const handleSelectChat = (conversationId: string) => {
     setActiveConversationId(conversationId);
   };
 
-  const updateConversation = (conversationId: string, updater: (conversation: Conversation) => Conversation) => {
-    setConversations((prev) =>
-      prev.map((conversation) => (conversation.id === conversationId ? updater(conversation) : conversation)),
-    );
-  };
+  const handleSendMessage = async (content: string, imageFile?: File) => {
+    if (!token) {
+      setBanner("Precisas de iniciar sessao para enviar mensagens.");
+      return;
+    }
+    if (isStreaming) return;
 
-  const handleSendMessage = (message: string, imageDataUrl?: string) => {
-    if (!message.trim() && !imageDataUrl) return;
+    const trimmedContent = content.trim();
+    if (!trimmedContent && !imageFile) return;
 
-    const currentConversation = activeConversationId
-      ? conversations.find((conversation) => conversation.id === activeConversationId)
-      : undefined;
+    setBanner(null);
+    setIsStreaming(true);
 
-    if (!currentConversation) {
-      const seededConversation = createInitialConversation();
-      setConversations((prev) => [seededConversation, ...prev]);
-      setActiveConversationId(seededConversation.id);
-      setTimeout(() => handleSendMessage(message, imageDataUrl), 0);
+    let conversationId = activeConversationId;
+    if (!conversationId) {
+      conversationId = await handleNewChat();
+    }
+
+    if (!conversationId) {
+      setIsStreaming(false);
       return;
     }
 
-    const messageDate = new Date();
-    const userMessage: StoredMessage = {
-      id: safeRandomId(),
+    const timestamp = formatTimestamp(new Date().toISOString());
+    const userMessage: ChatDisplayMessage = {
+      id: crypto.randomUUID(),
       role: "user",
-      content: message,
-      image: imageDataUrl,
-      timestamp: formatTime(messageDate),
-      createdAt: messageDate.toISOString(),
+      content: trimmedContent,
+      imageUrl: undefined,
+      timestamp,
     };
 
-    updateConversation(currentConversation.id, (conversation) => {
-      const titleShouldUpdate = conversation.messages.length <= 1;
-      return {
-        ...conversation,
-        title: titleShouldUpdate ? generateTitleFromMessage(message) : conversation.title,
-        messages: [...conversation.messages, userMessage],
-        updatedAt: userMessage.createdAt,
-        usage: {
-          ...conversation.usage,
-          messagesUsed: conversation.usage.messagesUsed + 1,
-          imagesUsed: conversation.usage.imagesUsed + (imageDataUrl ? 1 : 0),
-        },
-      };
-    });
+    updateMessages(conversationId, (prev) => [...prev, userMessage]);
 
-    setIsTyping(true);
-    setTimeout(() => {
-      const responseDate = new Date();
-      const responseData = generateAssistantResponse(message, Boolean(imageDataUrl));
-      const assistantMessage: StoredMessage = {
-        id: safeRandomId(),
-        role: "assistant",
-        content: responseData.content,
-        suggestions: responseData.suggestions,
-        timestamp: formatTime(responseDate),
-        createdAt: responseDate.toISOString(),
-      };
+    // Image upload placeholder - generate URL and upload if a file is provided.
+    let imageUrl: string | null = null;
+    if (imageFile) {
+      try {
+        const signed = await api.generateUploadUrl(token, imageFile.name, imageFile.type);
+        await fetch(signed.upload_url, {
+          method: "PUT",
+          headers: signed.headers,
+          body: imageFile,
+        });
+        imageUrl = signed.upload_url;
+      } catch (error) {
+        console.error("Falha no upload da imagem", error);
+        setBanner("Nao foi possivel carregar a imagem. Tenta novamente.");
+      }
+    }
 
-      updateConversation(currentConversation.id, (conversation) => ({
-        ...conversation,
-        messages: [...conversation.messages, assistantMessage],
-        updatedAt: assistantMessage.createdAt,
-      }));
+    const assistantMessageId = crypto.randomUUID();
+    const assistantMessage: ChatDisplayMessage = {
+      id: assistantMessageId,
+      role: "assistant",
+      content: "",
+      imageUrl: null,
+      timestamp: formatTimestamp(new Date().toISOString()),
+      pending: true,
+    };
 
-      setIsTyping(false);
-    }, 900);
+    updateMessages(conversationId, (prev) => [...prev, assistantMessage]);
+
+    try {
+      const stream = await streamChatCompletion({
+        token,
+        conversationId,
+        content: trimmedContent,
+        imageUrl,
+      });
+
+      for await (const chunk of stream) {
+        applyStreamingChunk(conversationId, assistantMessageId, chunk);
+      }
+
+      await refreshSession().catch(() => undefined);
+      setConversations((prev) =>
+        prev.map((conv) =>
+          conv.id === conversationId
+            ? { ...conv, updatedAt: new Date().toISOString(), messageCount: conv.messageCount + 1 }
+            : conv,
+        ),
+      );
+    } catch (error) {
+      console.error("Erro ao enviar mensagem", error);
+      setBanner(
+        (error as { status?: number }).status === 402
+          ? "Atingiste o limite diario de mensagens. Faz upgrade para um plano superior."
+          : "Nao foi possivel obter resposta. Tenta novamente.",
+      );
+      updateMessages(conversationId, (prev) => prev.filter((msg) => msg.id !== assistantMessageId));
+    } finally {
+      setIsStreaming(false);
+    }
   };
 
-  const lastAssistantSuggestions =
-    activeConversation?.messages
-      .filter((message) => message.role === "assistant")
-      .slice(-1)[0]
-      ?.suggestions ?? [];
+  const applyStreamingChunk = (conversationId: string, messageId: string, chunk: StreamingChunk) => {
+    if (chunk.type === "data" && chunk.content) {
+      updateMessages(conversationId, (prev) =>
+        prev.map((msg) =>
+          msg.id === messageId
+            ? {
+                ...msg,
+                content: `${msg.content}${chunk.content}`,
+              }
+            : msg,
+        ),
+      );
+    }
 
-  const inputSuggestions = Array.from(new Set([...lastAssistantSuggestions, ...QUICK_SUGGESTIONS])).slice(0, 4);
+    if (chunk.type === "end") {
+      updateMessages(conversationId, (prev) =>
+        prev.map((msg) =>
+          msg.id === messageId
+            ? {
+                ...msg,
+                id: chunk.assistant_message_id || messageId,
+                pending: false,
+              }
+            : msg,
+        ),
+      );
+    }
+  };
+
+  const currentUsage: UsageSnapshot = useMemo(() => {
+    const current = usage;
+    if (!isStreaming) {
+      return current;
+    }
+    return { ...current };
+  }, [usage, isStreaming]);
 
   return (
     <div className="container mx-auto flex w-full flex-col gap-6 px-4 pb-8 pt-6 lg:flex-row">
-      <div className="hidden h-[calc(100vh-200px)] flex-shrink-0 overflow-hidden rounded-3xl border border-border/60 bg-card/60 lg:block">
+      <div className="hidden h-[calc(100vh-160px)] flex-shrink-0 lg:block">
         <ChatSidebar
-          conversations={sidebarConversations}
-          currentConversationId={activeConversationId}
+          conversations={conversations}
+          currentConversationId={activeConversationId || undefined}
           onNewChat={handleNewChat}
           onSelectChat={handleSelectChat}
         />
@@ -405,54 +366,74 @@ const Chat = () => {
               </div>
             </div>
 
-            {activeConversation && (
-              <div className="w-full max-w-md">
-                <UsageCounter
-                  messagesUsed={activeConversation.usage.messagesUsed}
-                  messagesLimit={activeConversation.usage.messagesLimit}
-                  imagesUsed={activeConversation.usage.imagesUsed}
-                  imagesLimit={activeConversation.usage.imagesLimit}
-                  resetTime={activeConversation.usage.resetTime}
-                />
-              </div>
-            )}
+            <div className="hidden w-full max-w-md lg:block">
+              <UsageCounter
+                messagesUsed={currentUsage.messagesUsed}
+                messagesLimit={currentUsage.messagesLimit}
+                imagesUsed={currentUsage.imagesUsed}
+                imagesLimit={currentUsage.imagesLimit}
+                resetTime={currentUsage.resetTime}
+              />
+            </div>
           </div>
 
           <div className="mt-4 flex flex-col gap-3 lg:hidden">
-            <Select value={activeConversationId} onValueChange={handleSelectChat}>
+            <Select value={activeConversationId ?? undefined} onValueChange={setActiveConversationId}>
               <SelectTrigger>
                 <SelectValue placeholder="Seleciona uma conversa" />
               </SelectTrigger>
               <SelectContent>
-                {sidebarConversations.map((conversation) => (
+                {conversations.map((conversation) => (
                   <SelectItem key={conversation.id} value={conversation.id}>
                     {conversation.title}
                   </SelectItem>
                 ))}
               </SelectContent>
             </Select>
-            <Button variant="secondary" className="gap-2" onClick={handleNewChat}>
-              <Brain className="h-4 w-4" />
-              Nova conversa
-            </Button>
+            <div className="flex gap-2">
+              <Button
+                variant="secondary"
+                className="grow gap-2 rounded-xl"
+                onClick={handleNewChat}
+                disabled={isLoadingConversations}
+              >
+                <Brain className="h-4 w-4" />
+                Nova conversa
+              </Button>
+              <UsageCounter
+                messagesUsed={currentUsage.messagesUsed}
+                messagesLimit={currentUsage.messagesLimit}
+                imagesUsed={currentUsage.imagesUsed}
+                imagesLimit={currentUsage.imagesLimit}
+                resetTime={currentUsage.resetTime}
+              />
+            </div>
           </div>
         </div>
 
+        {banner && (
+          <div className="border-b border-border/70 bg-destructive/10 px-4 py-2 text-sm text-destructive">{banner}</div>
+        )}
+
         <ScrollArea className="flex-1 px-4 py-6">
           <div className="mx-auto flex w-full max-w-3xl flex-col gap-6">
-            {activeConversation?.messages.map((message) => (
-              <ChatMessage
-                key={message.id}
-                role={message.role}
-                content={message.content}
-                image={message.image}
-                timestamp={message.timestamp}
-                suggestions={message.suggestions}
-                onSuggestionClick={handleSendMessage}
-              />
-            ))}
-            {isTyping && (
-              <ChatMessage role="assistant" content="" isTyping timestamp={formatTime(new Date())} suggestions={[]} />
+            {isLoadingMessages && currentMessages.length === 0 ? (
+              <div className="flex h-40 items-center justify-center text-sm text-muted-foreground">
+                A carregar mensagens...
+              </div>
+            ) : (
+              currentMessages.map((message) => (
+                <ChatMessage
+                  key={message.id}
+                  role={message.role}
+                  content={message.content}
+                  image={message.imageUrl ?? undefined}
+                  timestamp={message.timestamp}
+                  isTyping={message.pending}
+                  suggestions={message.suggestions}
+                  onSuggestionClick={(suggestion) => handleSendMessage(suggestion)}
+                />
+              ))
             )}
             <div ref={scrollAnchorRef} />
           </div>
@@ -460,9 +441,9 @@ const Chat = () => {
 
         <ChatInput
           onSendMessage={handleSendMessage}
-          suggestions={inputSuggestions}
-          onSuggestionClick={handleSendMessage}
-          disabled={isTyping}
+          suggestions={currentMessages.length === 0 ? fallbackSuggestions : undefined}
+          onSuggestionClick={(suggestion) => handleSendMessage(suggestion)}
+          disabled={isStreaming}
         />
       </div>
     </div>
@@ -470,4 +451,5 @@ const Chat = () => {
 };
 
 export default Chat;
+
 

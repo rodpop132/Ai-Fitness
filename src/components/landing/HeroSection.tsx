@@ -11,16 +11,16 @@ export const HeroSection = () => {
         <div className="flex-1 space-y-8">
           <span className="inline-flex items-center gap-2 rounded-full border border-primary/40 bg-background/80 px-4 py-1 text-sm text-primary">
             <Sparkles className="h-4 w-4" />
-            Novo: planos com monitorização contínua
+            Novo: planos com monitorizacao continua
           </span>
 
           <div className="space-y-4">
             <h1 className="text-4xl font-display font-bold tracking-tight sm:text-5xl lg:text-6xl">
-              O teu copiloto digital para nutrição, treino e progresso real.
+              O teu copiloto digital para nutricao, treino e progresso real.
             </h1>
             <p className="max-w-2xl text-lg text-muted-foreground">
-              NutriFit AI combina IA conversacional, análise de imagens e dashboards avançados para libertar o teu tempo
-              e elevar a experiência de cada atleta ou paciente.
+              NutriFit AI combina IA conversacional, analise de imagens e dashboards avancados para libertar o teu tempo
+              e elevar a experiencia de cada atleta ou paciente.
             </p>
           </div>
 
@@ -31,13 +31,13 @@ export const HeroSection = () => {
             <Button asChild size="lg" variant="outline" className="gap-2">
               <Link to="/pricing">
                 <Play className="h-4 w-4" />
-                Ver planos disponíveis
+                Ver planos disponiveis
               </Link>
             </Button>
           </div>
 
           <p className="text-sm text-muted-foreground">
-            Sem cartão de crédito · Compliant com RGPD · Integração fácil com Supabase e Stripe
+            Sem cartao de credito - Compliant com RGPD - Integracao facil com Supabase e Stripe
           </p>
         </div>
 
@@ -54,7 +54,7 @@ export const HeroSection = () => {
 
           <div className="rounded-xl border border-border/70 bg-gradient-to-r from-primary/10 via-background to-background p-5 text-sm text-muted-foreground">
             NutriFit AI acelera a fase de descoberta, reduz o tempo de resposta e cria planos personalizados a partir de
-            inputs reais dos utilizadores. Começa hoje e acompanha resultados em tempo real.
+            inputs reais dos utilizadores. Comeca hoje e acompanha resultados em tempo real.
           </div>
         </div>
       </div>

@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 
 interface ChatInputProps {
-  onSendMessage: (message: string, imageDataUrl?: string) => void;
+  onSendMessage: (message: string, image?: File) => void;
   onSuggestionClick?: (suggestion: string) => void;
   disabled?: boolean;
   placeholder?: string;
@@ -20,6 +20,7 @@ export const ChatInput = ({
 }: ChatInputProps) => {
   const [message, setMessage] = useState("");
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [imageFile, setImageFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleImageSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,20 +30,22 @@ export const ChatInput = ({
     const reader = new FileReader();
     reader.onloadend = () => {
       setImagePreview(reader.result as string);
+      setImageFile(file);
     };
     reader.readAsDataURL(file);
   };
 
   const handleRemoveImage = () => {
     setImagePreview(null);
+    setImageFile(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
   };
 
   const handleSend = () => {
-    if (!message.trim() && !imagePreview) return;
-    onSendMessage(message.trim(), imagePreview || undefined);
+    if (!message.trim() && !imageFile) return;
+    onSendMessage(message.trim(), imageFile || undefined);
     setMessage("");
     handleRemoveImage();
   };
@@ -102,7 +105,7 @@ export const ChatInput = ({
             onClick={() => fileInputRef.current?.click()}
             variant="ghost"
             size="icon"
-            disabled={disabled}
+            disabled={disabled || !!imageFile}
             className="absolute bottom-2 right-2 h-9 w-9 rounded-full border border-primary/20 bg-primary/5 text-primary hover:bg-primary/15"
           >
             <ImagePlus className="h-4 w-4" />
@@ -111,7 +114,7 @@ export const ChatInput = ({
 
         <Button
           onClick={handleSend}
-          disabled={disabled || (!message.trim() && !imagePreview)}
+          disabled={disabled || (!message.trim() && !imageFile)}
           size="icon"
           className="h-14 w-14 rounded-2xl bg-primary text-primary-foreground shadow-glow transition hover:shadow-glow-strong"
         >
@@ -125,4 +128,3 @@ export const ChatInput = ({
     </div>
   );
 };
-

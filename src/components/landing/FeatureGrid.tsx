@@ -5,10 +5,10 @@ export const FeatureGrid = () => {
     <section id="features" className="space-y-6">
       <div className="space-y-3 text-center">
         <span className="text-sm font-semibold uppercase tracking-widest text-primary/80">Super poderes</span>
-        <h2 className="text-3xl font-display font-bold sm:text-4xl">Tudo o que precisas num só painel</h2>
+        <h2 className="text-3xl font-display font-bold sm:text-4xl">Tudo o que precisas num so painel</h2>
         <p className="mx-auto max-w-2xl text-base text-muted-foreground">
-          IA conversacional, automação de planos, análise de imagens e dashboards de progresso, tudo em ambiente seguro e
-          personalizável.
+          IA conversacional, automacao de planos, analise de imagens e dashboards de progresso, tudo em ambiente seguro e
+          personalizavel.
         </p>
       </div>
 

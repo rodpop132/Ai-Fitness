@@ -36,7 +36,7 @@ export const ChatMessage = ({
           <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
             {isUser ? "Tu" : "NutriFit AI"}
           </span>
-          {timestamp && <span className="text-xs text-muted-foreground">• {timestamp}</span>}
+          {timestamp && <span className="text-xs text-muted-foreground">- {timestamp}</span>}
         </div>
 
         <div

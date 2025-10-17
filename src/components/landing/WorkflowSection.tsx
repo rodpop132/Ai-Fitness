@@ -6,11 +6,11 @@ export const WorkflowSection = () => {
     <section id="workflow" className="rounded-3xl border border-border/60 bg-card/70 p-8 shadow-md md:p-12">
       <div className="mb-8 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
         <div>
-          <span className="text-sm font-semibold uppercase tracking-widest text-primary/80">Experiência guiada</span>
-          <h2 className="text-3xl font-display font-bold">Onboarding, acompanhamento e insights sem fricção</h2>
+          <span className="text-sm font-semibold uppercase tracking-widest text-primary/80">Experiencia guiada</span>
+          <h2 className="text-3xl font-display font-bold">Onboarding, acompanhamento e insights sem friccao</h2>
         </div>
         <p className="max-w-xl text-sm text-muted-foreground">
-          Configura fluxos automáticos que recolhem dados, geram planos e sugerem ajustes inteligentes. Mantém-te no
+          Configura fluxos automaticos que recolhem dados, geram planos e sugerem ajustes inteligentes. Mantem-te no
           controlo com alertas contextuais.
         </p>
       </div>

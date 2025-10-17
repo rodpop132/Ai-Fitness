@@ -4,9 +4,9 @@ import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
 
 const planMeta = [
-  { name: "Free", price: "0€", period: "mês", cta: "Começar grátis", tier: "free" as const },
-  { name: "Pro", price: "9,99€", period: "mês", cta: "Escolher Pro", tier: "pro" as const, highlight: true },
-  { name: "Elite", price: "19,99€", period: "mês", cta: "Explorar Elite", tier: "elite" as const },
+  { name: "Free", price: "0EUR", period: "mes", cta: "Comecar gratis", tier: "free" as const },
+  { name: "Pro", price: "9,99EUR", period: "mes", cta: "Escolher Pro", tier: "pro" as const, highlight: true },
+  { name: "Elite", price: "19,99EUR", period: "mes", cta: "Explorar Elite", tier: "elite" as const },
 ];
 
 export const PricingPreview = () => {
@@ -16,7 +16,7 @@ export const PricingPreview = () => {
         <span className="text-sm font-semibold uppercase tracking-widest text-primary/80">Planos simples</span>
         <h2 className="text-3xl font-display font-bold sm:text-4xl">Escala com o plano certo para a tua equipa</h2>
         <p className="mx-auto max-w-2xl text-base text-muted-foreground">
-          Começa gratuito e ativa funcionalidades avançadas quando precisares. Sem taxas escondidas, cancela quando quiseres.
+          Comeca gratuito e ativa funcionalidades avancadas quando precisares. Sem taxas escondidas, cancela quando quiseres.
         </p>
       </div>
 

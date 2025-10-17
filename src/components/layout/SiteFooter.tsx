@@ -3,19 +3,19 @@ import { Activity, Github, Linkedin, Mail } from "lucide-react";
 
 const footerLinks = [
   {
-    title: "Produto",
+    title: "Product",
     items: [
-      { label: "Funcionalidades", href: "/#features" },
-      { label: "Como funciona", href: "/#workflow" },
-      { label: "Planos", href: "/pricing" },
+      { label: "Features", href: "/#features" },
+      { label: "How it works", href: "/#workflow" },
+      { label: "Plans", href: "/pricing" },
     ],
   },
   {
-    title: "Apoio",
+    title: "Support",
     items: [
       { label: "FAQ", href: "/#faq" },
-      { label: "Suporte", href: "mailto:hello@nutrifit.ai" },
-      { label: "Documentação", href: "/pricing" },
+      { label: "Contact", href: "mailto:hello@nutrifit.ai" },
+      { label: "Documentation", href: "/pricing" },
     ],
   },
 ];
@@ -64,8 +64,8 @@ export const SiteFooter = () => {
             </div>
           </div>
           <p className="max-w-md text-sm text-muted-foreground">
-            Automação inteligente para nutrição, treino e acompanhamento de progresso. Ajuda cada pessoa a tomar melhores
-            decisões com insights sustentados por dados.
+            Intelligent automation for nutrition, training and progress tracking. Help every person make better decisions with
+            data-backed insights.
           </p>
           <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
             <Mail className="h-4 w-4 text-primary" />
@@ -85,7 +85,7 @@ export const SiteFooter = () => {
 
       <div className="border-t border-border/40 bg-background/60">
         <div className="container mx-auto flex flex-col items-center justify-between gap-4 px-6 py-6 text-xs text-muted-foreground sm:flex-row">
-          <p>© {year} NutriFit AI. Construído com ciência, tecnologia e empatia.</p>
+          <p>Copyright {year} NutriFit AI. Crafted with science, technology and empathy.</p>
           <div className="flex items-center gap-3">
             <a
               href="https://github.com/"
@@ -111,4 +111,6 @@ export const SiteFooter = () => {
     </footer>
   );
 };
+
+
 

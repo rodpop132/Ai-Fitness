@@ -1,138 +1,137 @@
 export const HERO_STATS = [
-  { label: "Planos personalizados", value: "+500K", description: "gerados com IA nutricional" },
-  { label: "Tempo médio de resposta", value: "4s", description: "para recomendações inteligentes" },
-  { label: "Satisfação dos utilizadores", value: "97%", description: "de coaches e clientes finais" },
+  { label: "Personalised plans", value: "+500K", description: "generated with nutrition AI" },
+  { label: "Average response time", value: "4s", description: "for smart recommendations" },
+  { label: "Client satisfaction", value: "97%", description: "coaches and end users" },
 ];
 
 export const FEATURE_CARDS = [
   {
-    title: "Nutrição adaptativa",
+    title: "Adaptive nutrition",
     description:
-      "Recebe planos alimentares que respeitam preferências, alergias e objetivos metabólicos com ajustes automáticos.",
-    icon: "🥗",
+      "Build meal plans that respect preferences, allergies and metabolic goals with automatic adjustments.",
+    icon: "Plan",
   },
   {
-    title: "Coach de treino inteligente",
+    title: "Intelligent workout coach",
     description:
-      "Constrói micro e macro ciclos personalizados, combinando treino de força, mobilidade e recuperação ativa.",
-    icon: "🏋️",
+      "Create micro and macro cycles that balance strength, mobility and recovery with minimal effort.",
+    icon: "Strong",
   },
   {
-    title: "Visão computacional",
+    title: "Computer vision",
     description:
-      "Fotografa pratos ou rótulos e obtém análise nutricional completa, insights de porções e alertas imediatos.",
-    icon: "📸",
+      "Snap meals or labels and receive full nutritional analysis, portion tips and immediate alerts.",
+    icon: "Vision",
   },
   {
-    title: "Acompanhamento de progresso",
+    title: "Progress tracking",
     description:
-      "Centraliza métricas corporais, fotos e notas semanais, com relatórios PDF exportáveis para partilhar.",
-    icon: "📈",
+      "Centralise metrics, photos and weekly notes with exportable PDF reports for your clients.",
+    icon: "Growth",
   },
 ];
 
 export const WORKFLOW_STEPS = [
   {
     step: "01",
-    title: "Conta configurada em minutos",
+    title: "Workspace ready in minutes",
     description:
-      "Importa clientes via CSV, convida por email ou usa os formulários inteligentes para recolher histórico de saúde.",
+      "Import clients via CSV, send invites or collect health history with smart onboarding forms.",
   },
   {
     step: "02",
-    title: "Assistente lança o plano inicial",
+    title: "Assistant launches the first plan",
     description:
-      "Define objetivos e restrições, e o motor de IA cria planos alimentares e de treino prontos a enviar, com macros equilibradas.",
+      "Set goals and restrictions and the AI engine delivers ready-to-share meal and workout plans.",
   },
   {
     step: "03",
-    title: "Feedback contínuo automatizado",
+    title: "Continuous automated feedback",
     description:
-      "O chatbot acompanha o dia a dia, recolhe feedback e sugere micro-ajustes, alertando o coach quando necessário.",
+      "The chatbot keeps track of daily habits, gathers feedback and flags adjustments for the coach.",
   },
 ];
 
 export const METRIC_CARDS = [
   {
-    title: "Configuração sem código",
-    description: "Conecta Supabase, Stripe e OpenAI com wizards guiados e guardas de segurança predefinidos.",
+    title: "No-code setup",
+    description: "Connect Supabase, Stripe and OpenAI through guided wizards and guardrails.",
   },
   {
-    title: "Segurança e RGPD",
-    description: "Infraestrutura desenhada para cumprir RGPD, com encriptação de dados sensíveis e logs auditáveis.",
+    title: "Security and compliance",
+    description: "Infrastructure built for GDPR with encrypted data and auditable logs.",
   },
   {
-    title: "Escala ilimitada",
-    description: "Arquitetura serverless pronta para crescer de 10 para 10.000 utilizadores sem dores de manutenção.",
+    title: "Scale without limits",
+    description: "Serverless architecture ready to grow from 10 to 10,000 users without maintenance pain.",
   },
 ];
 
 export const TESTIMONIALS = [
   {
     name: "Ana Marques",
-    role: "Nutricionista clínica",
+    role: "Clinical nutritionist",
     quote:
-      "A NutriFit AI libertou-me horas de planeamento repetitivo. Consigo dedicar-me a ouvir os meus pacientes e reforçar o acompanhamento humano.",
+      "NutriFit AI freed hours of repetitive planning so I can focus on listening to my clients and elevating human support.",
   },
   {
-    name: "João Duarte",
+    name: "Joao Duarte",
     role: "Head Coach, BOX 21",
     quote:
-      "As sugestões de treino têm consistência e a visibilidade sobre o desgaste diário dos atletas permite ajustar antes de surgir lesão.",
+      "Training suggestions stay consistent and I gain visibility on athlete fatigue before injuries show up.",
   },
   {
-    name: "Beatriz Gonçalves",
+    name: "Beatriz Goncalves",
     role: "Founder, MealPreps.pt",
     quote:
-      "Conseguimos lançar um produto digital em semanas. O chatbot torna a experiência divertida e aumenta retenção mês após mês.",
+      "We launched a digital product in weeks. The chatbot makes the experience fun and improves retention every month.",
   },
 ];
 
 export const FAQ_ITEMS = [
   {
-    question: "A IA substitui o profissional de saúde?",
+    question: "Does the AI replace health professionals?",
     answer:
-      "De forma alguma. A NutriFit AI automatiza tarefas repetitivas e sugere recomendações, mas mantém o especialista no centro das decisões.",
+      "No. NutriFit AI automates repetitive work and suggests options but keeps experts in control of each decision.",
   },
   {
-    question: "Como são calculadas as macros?",
+    question: "How are macros calculated?",
     answer:
-      "Usamos protocolos validados (Mifflin-St Jeor, Harris-Benedict) combinados com o feedback do utilizador e dados biométricos recentes.",
+      "We combine validated protocols (Mifflin-St Jeor, Harris-Benedict) with the latest user feedback and biometrics.",
   },
   {
-    question: "Posso personalizar a identidade visual?",
+    question: "Can I customise the branding?",
     answer:
-      "Sim. Ajusta logótipo, cores, tipografia e domínios personalizados para manter a experiência alinhada com a tua marca.",
+      "Yes. Adjust logo, colours, typography and custom domains so the experience matches your brand.",
   },
   {
-    question: "Há app mobile dedicada?",
+    question: "Is there a dedicated mobile app?",
     answer:
-      "Estamos em beta fechada com apps nativas iOS e Android. Enquanto isso, a experiência web é responsive e funciona offline.",
+      "Native iOS and Android apps are in beta. The web experience is responsive and works offline meanwhile.",
   },
 ];
 
 export const PRICING_FEATURES = {
   free: [
-    "10 mensagens/dia com IA",
-    "3 análises de imagem/dia",
-    "Histórico por 7 dias",
-    "Exportação CSV básica",
+    "10 AI messages per day",
+    "3 image analyses per day",
+    "History for 7 days",
+    "CSV export",
   ],
   pro: [
-    "200 mensagens/dia",
-    "30 análises de imagem/dia",
-    "Planos PDF premium",
-    "Histórico ilimitado",
-    "Integração com wearables",
-    "Suporte prioritário",
+    "200 messages per day",
+    "30 image analyses per day",
+    "Premium PDF plans",
+    "Unlimited history",
+    "Wearable integration",
+    "Priority support",
   ],
   elite: [
-    "Mensagens ilimitadas",
-    "Análises ilimitadas",
-    "Automação de macros avançada",
-    "Macro ciclos inteligentes",
-    "Consultoria 1:1 mensal",
-    "Acesso antecipado a novas features",
+    "Unlimited messages",
+    "Unlimited image analyses",
+    "Advanced macro automation",
+    "Intelligent macro cycles",
+    "Monthly 1:1 consulting",
+    "Early access to new features",
   ],
 };
-
