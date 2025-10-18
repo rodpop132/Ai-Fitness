@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { PricingCard } from "@/components/pricing/PricingCard";
 import { PRICING_FEATURES } from "@/lib/content";
 import { Badge } from "@/components/ui/badge";
@@ -23,6 +24,7 @@ const COMPARISON_ROWS: Array<{ label: string; tiers: [string | boolean, string |
 ];
 
 const Pricing = () => {
+  const { t } = useTranslation();
   const [billingCycle, setBillingCycle] = useState<BillingCycle>("monthly");
 
   const plans = useMemo(
@@ -32,7 +34,7 @@ const Pricing = () => {
         price: PLAN_PRICES.Free[billingCycle],
         period: billingCycle === "monthly" ? "mes" : "ano",
         description: "Para validar o potencial da NutriFit AI sem compromisso.",
-        features: PRICING_FEATURES.free,
+        features: PRICING_FEATURES.free.map((key) => t(key)),
         buttonText: "Comecar gratis",
       },
       {
@@ -40,7 +42,7 @@ const Pricing = () => {
         price: PLAN_PRICES.Pro[billingCycle],
         period: billingCycle === "monthly" ? "mes" : "ano",
         description: "Perfeito para nutricionistas e personal trainers com carteiras ativas.",
-        features: PRICING_FEATURES.pro,
+        features: PRICING_FEATURES.pro.map((key) => t(key)),
         highlighted: true,
         buttonText: "Escolher plano Pro",
       },
@@ -49,11 +51,11 @@ const Pricing = () => {
         price: PLAN_PRICES.Elite[billingCycle],
         period: billingCycle === "monthly" ? "mes" : "ano",
         description: "Para equipas e academias que querem automacao total e consultoria dedicada.",
-        features: PRICING_FEATURES.elite,
+        features: PRICING_FEATURES.elite.map((key) => t(key)),
         buttonText: "Falar com vendas",
       },
     ],
-    [billingCycle],
+    [billingCycle, t],
   );
 
   return (
@@ -186,4 +188,3 @@ const Pricing = () => {
 };
 
 export default Pricing;
-

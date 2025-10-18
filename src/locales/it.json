@@ -191,16 +191,22 @@
     "cards": {
       "free": {
         "title": "Free",
+        "price": "0 €",
+        "period": "mese",
         "description": "Valida NutriFit AI senza impegno.",
         "button": "Inizia gratis"
       },
       "pro": {
         "title": "Pro",
+        "price": "9,99 €",
+        "period": "mese",
         "description": "Ideale per nutrizionisti e personal trainer con clienti attivi.",
         "button": "Scegli piano Pro"
       },
       "elite": {
         "title": "Elite",
+        "price": "19,99 €",
+        "period": "mese",
         "description": "Per studi e palestre che richiedono automazione completa e consulenza dedicata.",
         "button": "Contatta vendite"
       }

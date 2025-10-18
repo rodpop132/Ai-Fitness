@@ -1,4 +1,4 @@
-{
+﻿{
   "common": {
     "brand": {
       "prefix": "NutriFit",
@@ -191,16 +191,22 @@
     "cards": {
       "free": {
         "title": "Free",
+        "price": "$0",
+        "period": "month",
         "description": "Validate NutriFit AI with zero commitment.",
         "button": "Start for free"
       },
       "pro": {
         "title": "Pro",
+        "price": "$9.99",
+        "period": "month",
         "description": "Ideal for nutritionists and personal trainers with active client rosters.",
         "button": "Choose Pro plan"
       },
       "elite": {
         "title": "Elite",
+        "price": "$19.99",
+        "period": "month",
         "description": "For studios and gyms that need full automation and dedicated consulting.",
         "button": "Talk to sales"
       }

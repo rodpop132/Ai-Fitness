@@ -191,16 +191,22 @@
     "cards": {
       "free": {
         "title": "Free",
+        "price": "0 €",
+        "period": "mês",
         "description": "Valida a NutriFit AI sem compromisso.",
         "button": "Começar grátis"
       },
       "pro": {
         "title": "Pro",
+        "price": "9,99 €",
+        "period": "mês",
         "description": "Ideal para nutricionistas e PTs com carteiras ativas.",
         "button": "Escolher plano Pro"
       },
       "elite": {
         "title": "Elite",
+        "price": "19,99 €",
+        "period": "mês",
         "description": "Para equipas e ginásios que precisam de automação total e consultoria dedicada.",
         "button": "Falar com vendas"
       }

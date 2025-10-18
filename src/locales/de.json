@@ -191,16 +191,22 @@
     "cards": {
       "free": {
         "title": "Free",
+        "price": "0 €",
+        "period": "Monat",
         "description": "NutriFit AI ohne Verpflichtung testen.",
         "button": "Kostenlos starten"
       },
       "pro": {
         "title": "Pro",
+        "price": "9,99 €",
+        "period": "Monat",
         "description": "Perfekt für Ernährungsberater und Trainer mit aktiven Klienten.",
         "button": "Pro-Tarif wählen"
       },
       "elite": {
         "title": "Elite",
+        "price": "19,99 €",
+        "period": "Monat",
         "description": "Für Studios und Gyms mit Vollautomatisierung und Beratung.",
         "button": "Vertrieb kontaktieren"
       }

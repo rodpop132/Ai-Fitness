@@ -55,3 +55,5 @@ export const PRICING_FEATURE_KEYS = {
     "pricing.features.elite.5",
   ],
 };
+
+export const PRICING_FEATURES = PRICING_FEATURE_KEYS;
