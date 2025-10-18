@@ -1,21 +1,35 @@
+import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { FEATURE_CARDS } from "@/lib/content";
 
 export const FeatureGrid = () => {
+  const { t } = useTranslation();
+
+  const cards = useMemo(
+    () =>
+      FEATURE_CARDS.map(({ key, icon }) => ({
+        key,
+        icon,
+        title: t(`features.cards.${key}.title`),
+        description: t(`features.cards.${key}.description`),
+      })),
+    [t],
+  );
+
   return (
     <section id="features" className="space-y-6">
       <div className="space-y-3 text-center">
-        <span className="text-sm font-semibold uppercase tracking-widest text-primary/80">Super poderes</span>
-        <h2 className="text-3xl font-display font-bold sm:text-4xl">Tudo o que precisas num so painel</h2>
-        <p className="mx-auto max-w-2xl text-base text-muted-foreground">
-          IA conversacional, automacao de planos, analise de imagens e dashboards de progresso, tudo em ambiente seguro e
-          personalizavel.
-        </p>
+        <span className="text-sm font-semibold uppercase tracking-widest text-primary/80">
+          {t("header.badge")}
+        </span>
+        <h2 className="text-3xl font-display font-bold sm:text-4xl">{t("features.title")}</h2>
+        <p className="mx-auto max-w-2xl text-base text-muted-foreground">{t("features.subtitle")}</p>
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-        {FEATURE_CARDS.map((feature, index) => (
+        {cards.map((feature, index) => (
           <article
-            key={feature.title}
+            key={feature.key}
             className="group h-full animate-slide-up rounded-3xl border border-border/70 bg-card/80 p-6 shadow-sm transition hover:-translate-y-2 hover:shadow-2xl"
             style={{ animationDelay: `${index * 0.15}s` }}
           >

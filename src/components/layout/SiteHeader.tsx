@@ -1,4 +1,5 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { Activity, LayoutDashboard, LogOut, Menu, MessageSquare, Settings2, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
@@ -13,22 +14,25 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
 
 const navItems = [
-  { label: "Funcionalidades", href: "/#features" },
-  { label: "Como funciona", href: "/#workflow" },
-  { label: "Testemunhos", href: "/#testimonials" },
-  { label: "Planos", href: "/pricing" },
+  { key: "features", href: "/#features" },
+  { key: "workflow", href: "/#workflow" },
+  { key: "testimonials", href: "/#testimonials" },
+  { key: "pricing", href: "/pricing" },
 ];
 
 const isInternalHash = (href: string) => href.includes("#");
 
 export const SiteHeader = () => {
+  const { t } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
   const { status, user, logout } = useAuth();
 
   const renderNavLink = (item: (typeof navItems)[number], mobile = false) => {
+    const label = t(`header.nav.${item.key}`);
     const hashTarget = item.href.split("#")[1] ?? "";
     const isActive =
       (!isInternalHash(item.href) && location.pathname === item.href) ||
@@ -39,15 +43,15 @@ export const SiteHeader = () => {
 
     if (isInternalHash(item.href)) {
       return (
-        <a key={item.label} href={item.href} className={`${linkClass} ${mobile ? "block py-2" : ""}`} data-active={isActive}>
-          {item.label}
+        <a key={item.key} href={item.href} className={`${linkClass} ${mobile ? "block py-2" : ""}`} data-active={isActive}>
+          {label}
         </a>
       );
     }
 
     return (
-      <Link key={item.label} to={item.href} className={`${linkClass} ${mobile ? "block py-2" : ""}`} data-active={isActive}>
-        {item.label}
+      <Link key={item.key} to={item.href} className={`${linkClass} ${mobile ? "block py-2" : ""}`} data-active={isActive}>
+        {label}
       </Link>
     );
   };
@@ -65,8 +69,10 @@ export const SiteHeader = () => {
             <Activity className="h-5 w-5" />
           </span>
           <div className="flex flex-col leading-tight">
-            <span className="text-sm font-semibold uppercase tracking-wider text-primary/80">NutriFit</span>
-            <span className="text-lg font-display font-bold">Smart Health Buddy</span>
+            <span className="text-sm font-semibold uppercase tracking-wider text-primary/80">
+              {t("common.brand.prefix")}
+            </span>
+            <span className="text-lg font-display font-bold">{t("common.brand.name")}</span>
           </div>
         </Link>
 
@@ -79,17 +85,18 @@ export const SiteHeader = () => {
               className="flex items-center gap-1 text-sm font-medium text-muted-foreground transition hover:text-primary data-[active=true]:text-primary"
             >
               <ShieldCheck className="h-4 w-4" />
-              Admin
+              {t("common.actions.admin")}
             </Link>
           )}
         </nav>
 
         <div className="hidden items-center gap-3 md:flex">
+          <LanguageSwitcher />
           <ThemeToggle />
           {status === "authenticated" ? (
             <>
               <Button className="rounded-xl bg-primary text-primary-foreground hover:shadow-glow" onClick={() => navigate("/chat")}>
-                Abrir chat
+                {t("common.actions.chat")}
               </Button>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -102,7 +109,7 @@ export const SiteHeader = () => {
                     <div className="hidden text-left text-xs leading-tight sm:block">
                       <span className="block font-medium text-foreground">{user?.email}</span>
                       <span className="text-[10px] uppercase tracking-wide text-muted-foreground">
-                        Plano {user?.plan?.toUpperCase()}
+                        {t("common.plan")} {user?.plan?.toUpperCase()}
                       </span>
                     </div>
                   </button>
@@ -111,26 +118,28 @@ export const SiteHeader = () => {
                   <DropdownMenuLabel>
                     <div className="flex flex-col">
                       <span className="text-sm font-semibold text-foreground">{user?.email}</span>
-                      <span className="text-xs text-muted-foreground">Plano {user?.plan?.toUpperCase()}</span>
+                      <span className="text-xs text-muted-foreground">
+                        {t("common.plan")} {user?.plan?.toUpperCase()}
+                      </span>
                     </div>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onSelect={() => navigate("/dashboard")}>
                     <LayoutDashboard className="mr-2 h-4 w-4" />
-                    Dashboard
+                    {t("common.actions.dashboard")}
                   </DropdownMenuItem>
                   <DropdownMenuItem onSelect={() => navigate("/chat")}>
                     <MessageSquare className="mr-2 h-4 w-4" />
-                    Chat inteligente
+                    {t("common.actions.chat")}
                   </DropdownMenuItem>
                   <DropdownMenuItem onSelect={() => navigate("/settings")}>
                     <Settings2 className="mr-2 h-4 w-4" />
-                    Configuracoes
+                    {t("common.actions.settings")}
                   </DropdownMenuItem>
                   {user?.isAdmin && (
                     <DropdownMenuItem onSelect={() => navigate("/admin")}>
                       <ShieldCheck className="mr-2 h-4 w-4" />
-                      Admin
+                      {t("common.actions.admin")}
                     </DropdownMenuItem>
                   )}
                   <DropdownMenuSeparator />
@@ -141,7 +150,7 @@ export const SiteHeader = () => {
                     }}
                   >
                     <LogOut className="mr-2 h-4 w-4" />
-                    Terminar sessao
+                    {t("common.actions.logout")}
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -149,16 +158,17 @@ export const SiteHeader = () => {
           ) : (
             <>
               <Button variant="ghost" onClick={() => navigate("/login")}>
-                Login
+                {t("common.actions.login")}
               </Button>
               <Button className="rounded-xl bg-primary text-primary-foreground hover:shadow-glow" onClick={() => navigate("/signup")}>
-                Criar conta
+                {t("common.actions.signup")}
               </Button>
             </>
           )}
         </div>
 
         <div className="flex items-center gap-2 md:hidden">
+          <LanguageSwitcher />
           <ThemeToggle />
           <Sheet>
             <SheetTrigger asChild>
@@ -193,43 +203,43 @@ export const SiteHeader = () => {
                         <div className="text-sm">
                           <p className="font-semibold text-foreground">{user?.email}</p>
                           <p className="text-xs uppercase tracking-wide text-muted-foreground">
-                            Plano {user?.plan?.toUpperCase()}
+                            {t("common.plan")} {user?.plan?.toUpperCase()}
                           </p>
                         </div>
                       </div>
                       <div className="mt-4 grid gap-2">
                         <Button className="w-full gradient-ai text-white shadow-glow" onClick={() => navigate("/dashboard")}>
                           <LayoutDashboard className="h-4 w-4" />
-                          Dashboard
+                          {t("common.actions.dashboard")}
                         </Button>
                         <Button variant="secondary" className="w-full" onClick={() => navigate("/settings")}>
                           <Settings2 className="h-4 w-4" />
-                          Configuracoes
+                          {t("common.actions.settings")}
                         </Button>
                         <Button variant="outline" className="w-full" onClick={() => navigate("/chat")}>
                           <MessageSquare className="h-4 w-4" />
-                          Abrir chat
+                          {t("common.actions.chat")}
                         </Button>
                         {user?.isAdmin && (
                           <Button variant="outline" className="w-full" onClick={() => navigate("/admin")}>
                             <ShieldCheck className="h-4 w-4" />
-                            Admin
+                            {t("common.actions.admin")}
                           </Button>
                         )}
                       </div>
                     </div>
                     <Button variant="destructive" className="w-full gap-2" onClick={handleLogout}>
                       <LogOut className="h-4 w-4" />
-                      Terminar sessao
+                      {t("common.actions.logout")}
                     </Button>
                   </div>
                 ) : (
                   <>
                     <Button className="w-full gradient-ai text-white shadow-glow" onClick={() => navigate("/signup")}>
-                      Criar conta
+                      {t("common.actions.signup")}
                     </Button>
                     <Button variant="outline" className="w-full" onClick={() => navigate("/login")}>
-                      Login
+                      {t("common.actions.login")}
                     </Button>
                   </>
                 )}

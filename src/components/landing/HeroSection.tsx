@@ -1,9 +1,24 @@
+import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { HERO_STATS } from "@/lib/content";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Activity, Play, ShieldCheck, Sparkles, Zap } from "lucide-react";
 
 export const HeroSection = () => {
+  const { t } = useTranslation();
+
+  const stats = useMemo(
+    () =>
+      HERO_STATS.map(({ key }) => ({
+        key,
+        value: t(`hero.stats.${key}.value`),
+        label: t(`hero.stats.${key}.label`),
+        description: t(`hero.stats.${key}.description`),
+      })),
+    [t],
+  );
+
   return (
     <section className="relative overflow-hidden rounded-3xl border border-border/60 bg-gradient-to-br from-primary/5 via-background to-background px-6 py-16 shadow-glow-strong">
       <div className="pointer-events-none absolute -left-20 top-10 hidden h-60 w-60 animate-float-slow rounded-full bg-primary/10 blur-3xl lg:block" />
@@ -14,17 +29,14 @@ export const HeroSection = () => {
         <div className="flex-1 space-y-8">
           <span className="inline-flex animate-fade-in items-center gap-2 rounded-full border border-primary/40 bg-background/80 px-4 py-1 text-sm text-primary shadow-sm">
             <Sparkles className="h-4 w-4" />
-            Novo: monitorizacao continua e integraçao Stripe
+            {t("hero.badge")}
           </span>
 
           <div className="space-y-4">
             <h1 className="animate-slide-up text-4xl font-display font-bold tracking-tight sm:text-5xl lg:text-6xl">
-              O copiloto digital que transforma nutricao e treino em experiencias premium.
+              {t("hero.title")}
             </h1>
-            <p className="max-w-2xl text-lg text-muted-foreground">
-              Combina IA conversacional, analise de imagens e dashboards interativos para entregar planos personalizados,
-              gerar PDFs e acompanhar progresso em tempo real — tudo num unico hub.
-            </p>
+            <p className="max-w-2xl text-lg text-muted-foreground">{t("hero.subtitle")}</p>
           </div>
 
           <div className="flex flex-wrap items-center gap-4">
@@ -34,7 +46,7 @@ export const HeroSection = () => {
               className="gradient-ai text-white shadow-glow transition-all duration-200 hover:-translate-y-0.5 hover:shadow-glow-strong"
             >
               <Link to="/chat">
-                Experimentar o chat inteligente
+                {t("hero.ctaPrimary")}
                 <Zap className="ml-2 h-4 w-4" />
               </Link>
             </Button>
@@ -46,7 +58,7 @@ export const HeroSection = () => {
             >
               <Link to="/pricing">
                 <Play className="h-4 w-4" />
-                Ver planos disponiveis
+                {t("hero.ctaSecondary")}
               </Link>
             </Button>
           </div>
@@ -54,20 +66,20 @@ export const HeroSection = () => {
           <div className="grid gap-3 text-sm text-muted-foreground sm:grid-cols-2">
             <div className="flex items-center gap-3 rounded-2xl border border-border/60 bg-background/70 p-3 backdrop-blur">
               <ShieldCheck className="h-5 w-5 text-primary" />
-              <span>RGPD-ready, single sign-on e backups diarios incluidos.</span>
+              <span>{t("hero.benefitSecurity")}</span>
             </div>
             <div className="flex items-center gap-3 rounded-2xl border border-border/60 bg-background/70 p-3 backdrop-blur">
               <Activity className="h-5 w-5 text-primary" />
-              <span>Workflows automáticos entre Supabase, Stripe e planos PDF.</span>
+              <span>{t("hero.benefitAutomation")}</span>
             </div>
           </div>
         </div>
 
         <div className="flex-1 space-y-6 rounded-2xl border border-primary/20 bg-card/80 p-6 backdrop-blur">
           <div className="grid gap-6 sm:grid-cols-3">
-            {HERO_STATS.map((stat, index) => (
+            {stats.map((stat, index) => (
               <div
-                key={stat.label}
+                key={stat.key}
                 className="animate-float-slow rounded-xl border border-primary/10 bg-background/70 p-4 text-center shadow-sm"
                 style={{ animationDelay: `${index * 0.3}s` }}
               >
@@ -80,8 +92,7 @@ export const HeroSection = () => {
 
           <div className="overflow-hidden rounded-xl border border-border/70 bg-gradient-to-r from-primary/10 via-background to-background p-5 text-sm text-muted-foreground">
             <div className="animate-shine bg-[linear-gradient(120deg,transparent,rgba(16,185,129,0.16),transparent)] bg-[length:250%_250%]">
-              NutriFit AI acelera a descoberta de necessidades, reduz o tempo de resposta e cria planos altamente
-              personalizados. Liga-te via SSE, escolhe o modelo ideal e acompanha resultados sem sair do browser.
+              {t("hero.highlight")}
             </div>
           </div>
         </div>

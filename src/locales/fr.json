@@ -1,0 +1,408 @@
+{
+  "common": {
+    "brand": {
+      "prefix": "NutriFit",
+      "name": "Smart Health Buddy"
+    },
+    "plan": "Forfait",
+    "language": "Langue",
+    "languageSearch": "Rechercher une langue…",
+    "theme": {
+      "light": "Clair",
+      "dark": "Sombre",
+      "system": "Système"
+    },
+    "actions": {
+      "login": "Connexion",
+      "signup": "Créer un compte",
+      "chat": "Ouvrir le chat",
+      "dashboard": "Tableau de bord",
+      "settings": "Paramètres",
+      "admin": "Admin",
+      "logout": "Se déconnecter",
+      "previous": "Précédent",
+      "next": "Suivant",
+      "refresh": "Actualiser",
+      "sync": "Synchroniser",
+      "upgrade": "Voir les offres premium",
+      "start": "Commencer",
+      "contact": "Contacter les ventes",
+      "learnMore": "En savoir plus",
+      "download": "Télécharger",
+      "update": "Mettre à jour",
+      "close": "Fermer"
+    },
+    "status": {
+      "loading": "Chargement…",
+      "error": "Une erreur est survenue. Réessayez."
+    }
+  },
+  "header": {
+    "nav": {
+      "features": "Fonctionnalités",
+      "workflow": "Workflow",
+      "testimonials": "Témoignages",
+      "pricing": "Tarifs"
+    },
+    "badge": "Workspace",
+    "greeting": "Bon retour"
+  },
+  "hero": {
+    "badge": "Nouveau : surveillance continue et intégration Stripe",
+    "title": "Le copilote digital qui transforme nutrition et entraînement en expériences premium.",
+    "subtitle": "Combinez IA conversationnelle, vision par ordinateur et dashboards interactifs pour livrer des plans personnalisés, exporter des PDF et suivre les progrès en temps réel — directement dans le navigateur.",
+    "ctaPrimary": "Essayer le chat intelligent",
+    "ctaSecondary": "Voir les tarifs",
+    "benefitSecurity": "Conforme RGPD, SSO et sauvegardes quotidiennes incluses.",
+    "benefitAutomation": "Workflows automatisés entre Supabase, Stripe et plans PDF.",
+    "stats": {
+      "plans": {
+        "label": "Plans personnalisés",
+        "value": "+500K",
+        "description": "générés avec l'IA de nutrition"
+      },
+      "speed": {
+        "label": "Temps moyen de réponse",
+        "value": "4s",
+        "description": "pour des recommandations intelligentes"
+      },
+      "satisfaction": {
+        "label": "Clients satisfaits",
+        "value": "97%",
+        "description": "coachs et utilisateurs finaux"
+      }
+    },
+    "highlight": "NutriFit AI accélère la découverte, réduit les délais de réponse et maintient des plans ultra personnalisés. Diffusez les réponses en direct, choisissez le meilleur modèle et suivez les résultats en temps réel."
+  },
+  "features": {
+    "title": "Tout ce dont vous avez besoin dans un seul espace",
+    "subtitle": "IA conversationnelle, plans automatisés, vision par ordinateur et dashboards de progression dans un environnement sécurisé et personnalisable.",
+    "cards": {
+      "adaptive": {
+        "title": "Nutrition adaptative",
+        "description": "Créez des plans qui respectent préférences, allergies et objectifs métaboliques avec des ajustements automatiques."
+      },
+      "workout": {
+        "title": "Coach d'entraînement intelligent",
+        "description": "Générez micro et macro cycles équilibrant force, mobilité et récupération avec un minimum d'effort."
+      },
+      "vision": {
+        "title": "Vision par ordinateur",
+        "description": "Photographiez repas ou étiquettes et recevez une analyse nutritionnelle complète, des conseils et alertes instantanées."
+      },
+      "progress": {
+        "title": "Suivi des progrès",
+        "description": "Centralisez métriques, photos et notes hebdomadaires avec rapports PDF exportables pour vos clients."
+      }
+    }
+  },
+  "workflow": {
+    "title": "Lancer. Assister. Itérer.",
+    "subtitle": "Automatisez la collecte de données, la création de plans et les ajustements intelligents tout en gardant le contrôle humain.",
+    "steps": {
+      "one": {
+        "title": "Workspace prêt en quelques minutes",
+        "description": "Importez vos clients en CSV, envoyez des invitations ou collectez l'historique santé via des formulaires intelligents."
+      },
+      "two": {
+        "title": "L'assistant crée le premier plan",
+        "description": "Définissez objectifs et contraintes et l'IA produit des plans prêts à partager."
+      },
+      "three": {
+        "title": "Feedback automatisé continu",
+        "description": "Le chatbot suit les habitudes quotidiennes, recueille le feedback et signale les ajustements au coach."
+      }
+    }
+  },
+  "metrics": {
+    "title": "Grandir en toute sécurité",
+    "cards": {
+      "nocode": {
+        "title": "Configuration sans code",
+        "description": "Connectez Supabase, Stripe et OpenAI avec des assistants guidés et des garde-fous."
+      },
+      "security": {
+        "title": "Sécurité & conformité",
+        "description": "Infrastructure pensée pour le RGPD avec données chiffrées et journaux auditables."
+      },
+      "scale": {
+        "title": "Évolutivité sans limites",
+        "description": "Architecture serverless prête à passer de 10 à 10 000 utilisateurs sans maintenance."
+      }
+    }
+  },
+  "testimonials": {
+    "title": "Plébiscité par les pros de la santé",
+    "subtitle": "Avis de coachs, nutritionnistes et fondateurs qui utilisent NutriFit AI.",
+    "items": {
+      "ana": {
+        "name": "Ana Marques",
+        "role": "Nutritionniste clinique",
+        "quote": "NutriFit AI m'a libéré des heures de planification répétitive pour consacrer plus de temps à mes clients."
+      },
+      "joao": {
+        "name": "João Duarte",
+        "role": "Head Coach, BOX 21",
+        "quote": "Les suggestions restent cohérentes et je détecte la fatigue des athlètes avant les blessures."
+      },
+      "beatriz": {
+        "name": "Beatriz Gonçalves",
+        "role": "Fondatrice, MealPreps.pt",
+        "quote": "Nous avons lancé un produit digital en quelques semaines. Le chatbot rend l'expérience ludique et améliore la rétention."
+      }
+    }
+  },
+  "faq": {
+    "title": "Questions fréquentes",
+    "subtitle": "Nous tenons une base de connaissances à jour. Contactez-nous si votre question n'apparaît pas.",
+    "items": {
+      "replace": {
+        "question": "L'IA remplace-t-elle les professionnels de santé ?",
+        "answer": "Non. NutriFit AI automatise les tâches répétitives et propose des options mais laisse les experts décider."
+      },
+      "macros": {
+        "question": "Comment les macros sont-elles calculées ?",
+        "answer": "Nous combinons des protocoles validés (Mifflin-St Jeor, Harris-Benedict) avec le feedback et la biométrie récents."
+      },
+      "branding": {
+        "question": "Puis-je personnaliser le branding ?",
+        "answer": "Oui. Ajustez logo, couleurs, typographie et domaines personnalisés pour refléter votre marque."
+      },
+      "mobile": {
+        "question": "Existe-t-il une application mobile dédiée ?",
+        "answer": "Les applications iOS et Android sont en bêta. L'expérience web est responsive et fonctionne hors ligne."
+      }
+    }
+  },
+  "cta": {
+    "title": "Prêt à co-créer des parcours plus sains ?",
+    "subtitle": "Activez votre workspace, invitez vos premiers clients et laissez NutriFit AI accélérer votre livraison.",
+    "primary": "Démarrer l'essai gratuit",
+    "secondary": "Parler aux ventes"
+  },
+  "pricing": {
+    "title": "Des offres pour chaque étape",
+    "subtitle": "Choisissez le forfait qui évolue avec votre activité. Tous incluent chatbot, plans intelligents et intégrations.",
+    "billing": {
+      "monthly": "Mensuel",
+      "yearly": "Annuel",
+      "save": "Économisez jusqu'à 25 %"
+    },
+    "cards": {
+      "free": {
+        "title": "Free",
+        "description": "Validez NutriFit AI sans engagement.",
+        "button": "Commencer gratuitement"
+      },
+      "pro": {
+        "title": "Pro",
+        "description": "Idéal pour nutritionnistes et coachs avec clients actifs.",
+        "button": "Choisir l'offre Pro"
+      },
+      "elite": {
+        "title": "Elite",
+        "description": "Pour les studios et salles recherchant automatisation complète et conseil dédié.",
+        "button": "Contacter les ventes"
+      }
+    },
+    "features": {
+      "free": [
+        "10 messages IA par jour",
+        "3 analyses d'image par jour",
+        "Historique de 7 jours",
+        "Export CSV"
+      ],
+      "pro": [
+        "200 messages par jour",
+        "30 analyses d'image par jour",
+        "Plans PDF premium",
+        "Historique illimité",
+        "Intégration wearables",
+        "Support prioritaire"
+      ],
+      "elite": [
+        "Messages illimités",
+        "Analyses d'image illimitées",
+        "Automatisation avancée des macros",
+        "Cycles de macros intelligents",
+        "Consulting mensuel 1:1",
+        "Accès anticipé aux nouveautés"
+      ]
+    },
+    "comparison": {
+      "title": "Comparatif des fonctionnalités",
+      "rows": {
+        "messages": "Messages IA quotidiens",
+        "vision": "Analyses d'images quotidiennes",
+        "pdf": "Exportation de plans PDF",
+        "history": "Historique",
+        "wearables": "Intégration wearables",
+        "consulting": "Consulting mensuel"
+      },
+      "values": {
+        "messages": ["10", "200", "Illimité"],
+        "vision": ["3", "30", "Illimité"],
+        "pdf": ["—", "Oui", "Oui"],
+        "history": ["7 jours", "Illimité", "Illimité"],
+        "wearables": ["—", "Oui", "Avancé inclus"],
+        "consulting": ["—", "—", "Oui"]
+      }
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Connexion",
+      "subtitle": "Accédez à votre workspace NutriFit AI."
+    },
+    "signup": {
+      "title": "Créer votre compte",
+      "subtitle": "Créez des plans intelligents en quelques minutes."
+    },
+    "email": "Email",
+    "password": "Mot de passe",
+    "submit": "Continuer",
+    "haveAccount": "Vous avez déjà un compte ?",
+    "noAccount": "Pas encore de compte ?",
+    "errors": {
+      "sessionExpired": "Session expirée. Veuillez vous reconnecter."
+    }
+  },
+  "chat": {
+    "title": "Assistant NutriFit AI",
+    "subtitle": "Partagez objectifs, photos ou métriques et recevez des recommandations en quelques secondes.",
+    "newChat": "Nouvelle conversation",
+    "selectConversation": "Sélectionner une conversation",
+    "suggestionsTitle": "Essayez de demander",
+    "placeholder": "Écrivez un message ou envoyez la photo d'un repas…",
+    "uploadError": "Impossible de téléverser l'image. Réessayez.",
+    "quotaError": "Limite quotidienne atteinte. Passez à un forfait supérieur.",
+    "streamError": "Impossible d'obtenir une réponse. Réessayez.",
+    "planUsage": {
+      "messages": "Messages utilisés aujourd'hui",
+      "images": "Analyses d'images"
+    },
+    "model": {
+      "label": "Modèle actif",
+      "description": "Préférence partagée avec le dashboard et appliquée aux nouvelles demandes.",
+      "fast": "FitAi 2.6 · réponses rapides",
+      "detailed": "FitAi 3.5 · planification détaillée",
+      "nutri": "FitAi Nutri · expert nutrition"
+    },
+    "history": "Conversations",
+    "queued": "Chargement des messages…",
+    "tip": "Astuce : partagez objectifs, contraintes ou emploi du temps pour des recommandations précises.",
+    "models": {
+      "fitai_fast": "⚡ FitAi 2.6 (Rapide)",
+      "fitai_detailed": "🧠 FitAi 3.5 (Détaillé)",
+      "fitai_nutri": "🥗 FitAi Nutri (Nutrition)"
+    }
+  },
+  "dashboard": {
+    "greeting": "Bonjour",
+    "subtitle": "Gardez la maîtrise de votre workspace, choisissez le modèle idéal et mesurez l'impact réel.",
+    "openChat": "Ouvrir le chat avec {{model}}",
+    "quickActions": {
+      "profile": "Profil & statut",
+      "history": "Activité récente",
+      "model": "Sélecteur de modèle"
+    },
+    "radar": {
+      "title": "Radar d'utilisation",
+      "subtitle": "Suivez la consommation de messages et vision en temps réel.",
+      "model": "Modèle actif",
+      "limits": "Limites quotidiennes"
+    },
+    "models": {
+      "title": "Modèles de chat",
+      "subtitle": "Définissez la manière dont NutriFit répond aux nouvelles requêtes.",
+      "active": "Modèle actif",
+      "use": "Utiliser ce modèle",
+      "bullets": {
+        "fitai_fast": [
+          "Faible latence avec réponses directes",
+          "Idéal mobile et questions de routine",
+          "Faible consommation de tokens"
+        ],
+        "fitai_detailed": [
+          "Explications structurées étape par étape",
+          "Parfait pour plans hebdomadaires et périodisation",
+          "Suggestions cohérentes avec l'historique"
+        ],
+        "fitai_nutri": [
+          "Calcule macros et calories automatiquement",
+          "Valide contraintes et préférences",
+          "Propose des substitutions intelligentes"
+        ]
+      }
+    },
+    "integration": {
+      "title": "Intégration backend",
+      "subtitle": "Envoyez le champ model pour recevoir la réponse du moteur choisi.",
+      "note": "Le backend diffuse via SSE. Fermez la connexion après l'événement end."
+    },
+    "history": {
+      "title": "Historique de progression",
+      "subtitle": "Entrées enregistrées via chatbot ou intégrations externes.",
+      "empty": "Pas encore d'entrée. Demandez au chatbot d'enregistrer la première."
+    }
+  },
+  "settings": {
+    "title": "Préférences & configuration",
+    "subtitle": "Ajustez le comportement du chatbot, synchronisez vos préférences et contrôlez l'apparence.",
+    "workspace": "Espace personnel",
+    "themeLabel": "Thème de l'interface",
+    "links": {
+      "dashboard": "Ouvrir le tableau de bord",
+      "chat": "Aller au chat",
+      "pricing": "Gérer le forfait"
+    },
+    "model": {
+      "title": "Modèle de chat",
+      "subtitle": "Partagé entre dashboard et chat pour les futures requêtes."
+    },
+    "preferences": {
+      "title": "Préférences du chat",
+      "subtitle": "Définissez le comportement du chat sur cet appareil.",
+      "suggestions": {
+        "label": "Suggestions intelligentes",
+        "description": "Afficher des propositions lorsque vous ouvrez une nouvelle conversation."
+      },
+      "autoscroll": {
+        "label": "Défilement automatique",
+        "description": "Désactivez si vous préférez contrôler manuellement la position de la conversation."
+      },
+      "reset": "Réinitialiser",
+      "local": "Les paramètres sont stockés localement sur cet appareil."
+    }
+  },
+  "admin": {
+    "title": "Console administrateur",
+    "subtitle": "Gérez utilisateurs, abonnements et usage de NutriFit AI.",
+    "totals": "Utilisateurs totaux",
+    "distribution": "Répartition par forfait",
+    "adminState": "Statut administratif",
+    "stateDescription": "Rôle actuel de {{email}}",
+    "adminActive": "Accès administrateur actif",
+    "noAccess": "Pas d'accès admin",
+    "adminInfo": "Les administrateurs peuvent lister les utilisateurs et gérer les plans. Ajoutez les emails autorisés via la variable ADMIN_EMAILS.",
+    "users": {
+      "title": "Utilisateurs",
+      "subtitle": "Résultats paginés ({{size}} par page)",
+      "email": "Email",
+      "plan": "Forfait",
+      "created": "Créé le",
+      "id": "ID",
+      "empty": "Pas assez de données.",
+      "loading": "Chargement des utilisateurs…"
+    },
+    "errors": {
+      "noPermission": "Vous n'avez pas les droits administrateur.",
+      "load": "Impossible de charger les utilisateurs."
+    }
+  },
+  "notFound": {
+    "title": "Page introuvable",
+    "subtitle": "La page recherchée a été déplacée ou n'existe plus.",
+    "home": "Retour à l'accueil"
+  }
+}

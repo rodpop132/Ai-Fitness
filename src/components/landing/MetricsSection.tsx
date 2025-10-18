@@ -1,16 +1,31 @@
+import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { METRIC_CARDS } from "@/lib/content";
 import { ShieldCheck, Server, GaugeCircle } from "lucide-react";
 
 const icons = [ShieldCheck, Server, GaugeCircle];
 
 export const MetricsSection = () => {
+  const { t } = useTranslation();
+
+  const metrics = useMemo(
+    () =>
+      METRIC_CARDS.map(({ key }, index) => ({
+        key,
+        index,
+        title: t(`metrics.cards.${key}.title`),
+        description: t(`metrics.cards.${key}.description`),
+      })),
+    [t],
+  );
+
   return (
     <section className="grid gap-6 lg:grid-cols-3">
-      {METRIC_CARDS.map((metric, index) => {
-        const Icon = icons[index];
+      {metrics.map((metric) => {
+        const Icon = icons[metric.index];
         return (
           <article
-            key={metric.title}
+            key={metric.key}
             className="rounded-3xl border border-border/70 bg-gradient-to-br from-background via-card/90 to-background p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
           >
             <div className="flex items-center gap-3">
@@ -26,4 +41,3 @@ export const MetricsSection = () => {
     </section>
   );
 };
-
