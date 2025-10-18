@@ -1,4 +1,25 @@
-const DEFAULT_API_BASE = "http://23.136.44.213:30087";
+const DEFAULT_API_PORT = 30087;
+
+const resolveDefaultApiBase = (): string => {
+  const fallback = `http://localhost:${DEFAULT_API_PORT}`;
+
+  if (typeof window === "undefined") {
+    return fallback;
+  }
+
+  const { protocol, hostname } = window.location;
+  if (!protocol || !hostname) {
+    return fallback;
+  }
+
+  if (hostname === "localhost" || hostname === "127.0.0.1") {
+    return `${protocol}//${hostname}:${DEFAULT_API_PORT}`;
+  }
+
+  return `${protocol}//${hostname}`;
+};
+
+const DEFAULT_API_BASE = resolveDefaultApiBase();
 
 const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL as string | undefined)?.trim() || DEFAULT_API_BASE;
 
