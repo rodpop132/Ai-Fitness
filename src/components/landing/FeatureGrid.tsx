@@ -13,12 +13,13 @@ export const FeatureGrid = () => {
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-        {FEATURE_CARDS.map((feature) => (
+        {FEATURE_CARDS.map((feature, index) => (
           <article
             key={feature.title}
-            className="group h-full rounded-3xl border border-border/70 bg-card/80 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+            className="group h-full animate-slide-up rounded-3xl border border-border/70 bg-card/80 p-6 shadow-sm transition hover:-translate-y-2 hover:shadow-2xl"
+            style={{ animationDelay: `${index * 0.15}s` }}
           >
-            <span className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-2xl">
+            <span className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-2xl text-primary shadow-inner transition group-hover:scale-105 group-hover:bg-primary/20">
               {feature.icon}
             </span>
             <h3 className="text-xl font-display font-semibold">{feature.title}</h3>
@@ -30,4 +31,3 @@ export const FeatureGrid = () => {
     </section>
   );
 };
-

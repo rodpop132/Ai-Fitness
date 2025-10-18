@@ -97,6 +97,18 @@ export default {
           "0%, 100%": { filter: "drop-shadow(0 0 20px hsl(168 100% 39% / 0.4))" },
           "50%": { filter: "drop-shadow(0 0 40px hsl(168 100% 39% / 0.8))" }
         },
+        float: {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-12px)" }
+        },
+        "pulse-soft": {
+          "0%, 100%": { opacity: "0.7" },
+          "50%": { opacity: "1" }
+        },
+        shine: {
+          "0%": { backgroundPosition: "200% 50%" },
+          "100%": { backgroundPosition: "-200% 50%" }
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -106,6 +118,9 @@ export default {
         "typing": "typing 1.2s infinite",
         "pulse-heart": "pulse-heart 1.2s ease-in-out infinite",
         "glow": "glow 2s ease-in-out infinite",
+        "float-slow": "float 6s ease-in-out infinite",
+        "pulse-soft": "pulse-soft 3s ease-in-out infinite",
+        "shine": "shine 8s ease-in-out infinite",
       },
     },
   },

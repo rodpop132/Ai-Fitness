@@ -188,11 +188,16 @@ export async function streamChatCompletion(options: {
   conversationId: string;
   content: string;
   imageUrl?: string | null;
+  model?: string;
 }) {
   const response = await fetch(`${API_BASE_URL}/chat/${options.conversationId}/messages`, {
     method: "POST",
     headers: buildHeaders(options.token, { Accept: "text/event-stream" }),
-    body: JSON.stringify({ content: options.content, image_url: options.imageUrl ?? null }),
+    body: JSON.stringify({
+      content: options.content,
+      image_url: options.imageUrl ?? null,
+      model: options.model ?? undefined,
+    }),
   });
 
   if (!response.ok || !response.body) {

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Activity, Brain, Sparkles } from "lucide-react";
+import { Activity, Brain, Sparkles, Wand2 } from "lucide-react";
 import { ChatSidebar } from "@/components/chat/ChatSidebar";
 import { ChatMessage } from "@/components/chat/ChatMessage";
 import { ChatInput } from "@/components/chat/ChatInput";
@@ -16,6 +16,9 @@ import {
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { api, streamChatCompletion, StreamingChunk } from "@/lib/api";
+import { useChatPreferences, ChatModel, chatModelLabels } from "@/hooks/useChatPreferences";
+import { useUserPreferences } from "@/hooks/useUserPreferences";
+import { cn } from "@/lib/utils";
 
 type Role = "user" | "assistant";
 
@@ -67,8 +70,52 @@ const fallbackSuggestions = [
   "Quais macros ideais para perda de peso",
 ];
 
+const MODEL_SUGGESTIONS: Record<ChatModel, string[]> = {
+  fitai_fast: [
+    "Resume o progresso da ultima semana em 3 bullets",
+    "Define uma rotina HIIT de 20 minutos",
+    "Sugere snacks rapidos com menos de 200 kcal",
+  ],
+  fitai_detailed: [
+    "Cria um plano alimentar de 7 dias com 1800 kcal",
+    "Avalia o meu treino atual e detecta falhas",
+    "Simula um check-up nutricional completo",
+  ],
+  fitai_nutri: [
+    "Analisa esta refeicao: arroz, frango, legumes",
+    "Sugere um plano vegetariano com 120g proteina",
+    "Indica macros ideais para perda de gordura",
+  ],
+};
+
+const MODEL_BADGE_STYLES: Record<ChatModel, string> = {
+  fitai_fast: "border-emerald-400/50 bg-emerald-400/10 text-emerald-400",
+  fitai_detailed: "border-sky-400/50 bg-sky-400/10 text-sky-400",
+  fitai_nutri: "border-amber-400/50 bg-amber-400/10 text-amber-500",
+};
+
+const CHAT_MODEL_OPTIONS: Array<{ value: ChatModel; label: string; description: string }> = [
+  {
+    value: "fitai_fast",
+    label: chatModelLabels.fitai_fast.name,
+    description: chatModelLabels.fitai_fast.description,
+  },
+  {
+    value: "fitai_detailed",
+    label: chatModelLabels.fitai_detailed.name,
+    description: chatModelLabels.fitai_detailed.description,
+  },
+  {
+    value: "fitai_nutri",
+    label: chatModelLabels.fitai_nutri.name,
+    description: chatModelLabels.fitai_nutri.description,
+  },
+];
+
 const Chat = () => {
   const { token, user, refreshSession } = useAuth();
+  const { preferences } = useUserPreferences();
+  const { model: selectedModel, setModel: setSelectedModel } = useChatPreferences();
   const [conversations, setConversations] = useState<ConversationSummary[]>([]);
   const [activeConversationId, setActiveConversationId] = useState<string | null>(null);
   const [messagesByConversation, setMessagesByConversation] = useState<Record<string, ChatDisplayMessage[]>>({});
@@ -88,6 +135,10 @@ const Chat = () => {
       resetTime: "00:00",
     };
   }, [user]);
+
+  const currentModelInfo = chatModelLabels[selectedModel];
+  const currentModelBadge = MODEL_BADGE_STYLES[selectedModel];
+  const modelSuggestions = MODEL_SUGGESTIONS[selectedModel] ?? fallbackSuggestions;
 
   useEffect(() => {
     if (!token) return;
@@ -161,12 +212,16 @@ const Chat = () => {
   }, [activeConversationId, token, messagesByConversation]);
 
   useEffect(() => {
+    if (!preferences.autoScrollOnReply) {
+      return;
+    }
     if (scrollAnchorRef.current) {
       scrollAnchorRef.current.scrollIntoView({ behavior: "smooth" });
     }
-  }, [messagesByConversation, activeConversationId, isStreaming]);
+  }, [messagesByConversation, activeConversationId, isStreaming, preferences.autoScrollOnReply]);
 
   const currentMessages = activeConversationId ? messagesByConversation[activeConversationId] ?? [] : [];
+  const shouldShowSuggestions = preferences.showSuggestions && currentMessages.length === 0;
 
   const updateMessages = (conversationId: string, updater: (messages: ChatDisplayMessage[]) => ChatDisplayMessage[]) => {
     setMessagesByConversation((prev) => ({
@@ -178,10 +233,16 @@ const Chat = () => {
   const handleNewChat = async (): Promise<string | undefined> => {
     if (!token) return undefined;
     try {
-      const created = await api.createConversation(token, "Nova conversa");
+      const now = new Date();
+      const formatted = now.toLocaleDateString("pt-PT", {
+        day: "2-digit",
+        month: "short",
+      });
+      const preferredTitle = `${currentModelInfo.name} · ${formatted}`;
+      const created = await api.createConversation(token, preferredTitle);
       const summary: ConversationSummary = {
         id: created.id,
-        title: created.title,
+        title: created.title || preferredTitle,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
         messageCount: 0,
@@ -270,6 +331,7 @@ const Chat = () => {
         conversationId,
         content: trimmedContent,
         imageUrl,
+        model: selectedModel,
       });
 
       for await (const chunk of stream) {
@@ -346,14 +408,14 @@ const Chat = () => {
       </div>
 
       <div className="flex h-[calc(100vh-160px)] flex-1 flex-col overflow-hidden rounded-3xl border border-border/60 bg-card/70 shadow-lg">
-        <div className="border-b border-border/60 bg-background/80 px-4 py-4 backdrop-blur">
-          <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
-            <div className="flex items-center gap-4">
+        <div className="border-b border-border/60 bg-background/80 px-4 py-5 backdrop-blur">
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+            <div className="flex items-start gap-4">
               <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/15 text-primary">
                 <Activity className="h-5 w-5" />
               </span>
-              <div>
-                <div className="flex items-center gap-2">
+              <div className="space-y-3">
+                <div className="flex flex-wrap items-center gap-2">
                   <h1 className="text-xl font-display font-semibold">Assistente NutriFit AI</h1>
                   <Badge variant="secondary" className="gap-1 border-primary/30 bg-primary/10 text-primary">
                     <Sparkles className="h-3 w-3" />
@@ -363,21 +425,66 @@ const Chat = () => {
                 <p className="text-sm text-muted-foreground">
                   Partilha objetivos, fotos ou metricas e recebe recomendacoes em segundos.
                 </p>
+                <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
+                  <Badge
+                    variant="outline"
+                    className={cn(
+                      "flex items-center gap-1 rounded-full border px-3 py-1 font-semibold",
+                      currentModelBadge,
+                    )}
+                  >
+                    <Wand2 className="h-3 w-3" />
+                    {currentModelInfo.name}
+                  </Badge>
+                  <span>{currentModelInfo.description}</span>
+                </div>
               </div>
             </div>
 
-            <div className="hidden w-full max-w-md lg:block">
-              <UsageCounter
-                messagesUsed={currentUsage.messagesUsed}
-                messagesLimit={currentUsage.messagesLimit}
-                imagesUsed={currentUsage.imagesUsed}
-                imagesLimit={currentUsage.imagesLimit}
-                resetTime={currentUsage.resetTime}
-              />
+            <div className="flex w-full flex-col gap-3 lg:max-w-sm">
+              <Select value={selectedModel} onValueChange={(value) => setSelectedModel(value as ChatModel)}>
+                <SelectTrigger className="rounded-xl border border-border/70 bg-background/70 text-left">
+                  <SelectValue placeholder="Seleciona o modelo de chat" />
+                </SelectTrigger>
+                <SelectContent>
+                  {CHAT_MODEL_OPTIONS.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      <div className="flex flex-col gap-1">
+                        <span className="text-sm font-medium">{option.label}</span>
+                        <span className="text-xs text-muted-foreground">{option.description}</span>
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <p className="text-xs text-muted-foreground">
+                Esta configuracao e partilhada com o dashboard e aplicada a novas mensagens.
+              </p>
+              <div className="hidden w-full lg:block">
+                <UsageCounter
+                  messagesUsed={currentUsage.messagesUsed}
+                  messagesLimit={currentUsage.messagesLimit}
+                  imagesUsed={currentUsage.imagesUsed}
+                  imagesLimit={currentUsage.imagesLimit}
+                  resetTime={currentUsage.resetTime}
+                />
+              </div>
             </div>
           </div>
 
           <div className="mt-4 flex flex-col gap-3 lg:hidden">
+            <Select value={selectedModel} onValueChange={(value) => setSelectedModel(value as ChatModel)}>
+              <SelectTrigger>
+                <SelectValue placeholder="Modelo de chat" />
+              </SelectTrigger>
+              <SelectContent>
+                {CHAT_MODEL_OPTIONS.map((option) => (
+                  <SelectItem key={option.value} value={option.value}>
+                    {option.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
             <Select value={activeConversationId ?? undefined} onValueChange={setActiveConversationId}>
               <SelectTrigger>
                 <SelectValue placeholder="Seleciona uma conversa" />
@@ -441,7 +548,7 @@ const Chat = () => {
 
         <ChatInput
           onSendMessage={handleSendMessage}
-          suggestions={currentMessages.length === 0 ? fallbackSuggestions : undefined}
+          suggestions={shouldShowSuggestions ? modelSuggestions : undefined}
           onSuggestionClick={(suggestion) => handleSendMessage(suggestion)}
           disabled={isStreaming}
         />
