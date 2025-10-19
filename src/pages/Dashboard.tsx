@@ -72,7 +72,7 @@ const CHAT_MODEL_CONFIG: Record<
 };
 
 const Dashboard = () => {
-  const { user, status, refreshSession, token } = useAuth();
+  const { user, refreshSession, token } = useAuth();
   const navigate = useNavigate();
   const { model: selectedModel, setModel: setSelectedModel } = useChatPreferences();
   const [progress, setProgress] = useState<ProgressEntry[]>([]);
@@ -80,10 +80,11 @@ const Dashboard = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (status === "authenticated") {
-      refreshSession().catch(() => undefined);
+    if (!token) {
+      return;
     }
-  }, [status, refreshSession]);
+    refreshSession().catch(() => undefined);
+  }, [token, refreshSession]);
 
   useEffect(() => {
     if (!token) return;
