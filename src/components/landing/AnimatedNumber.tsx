@@ -40,7 +40,13 @@ export const AnimatedNumber = ({
   decimals = 0,
   className,
 }: AnimatedNumberProps) => {
-  const { prefix, numeric, suffix, raw } = useMemo(() => parseValue(value), [value]);
+  const safeValue = useMemo(() => {
+    if (typeof value === "number") return value.toString();
+    if (typeof value === "string") return value;
+    return value != null ? String(value) : "";
+  }, [value]);
+
+  const { prefix, numeric, suffix, raw } = useMemo(() => parseValue(safeValue), [safeValue]);
   const [display, setDisplay] = useState<number>(numeric !== null ? 0 : 0);
   const [hasAnimated, setHasAnimated] = useState(false);
   const ref = useRef<HTMLSpanElement | null>(null);
