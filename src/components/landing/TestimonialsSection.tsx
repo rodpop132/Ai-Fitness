@@ -18,9 +18,9 @@ export const TestimonialsSection = () => {
   );
 
   return (
-    <section id="testimonials" className="space-y-6">
-      <div className="space-y-2 text-center">
-        <span className="text-sm font-semibold uppercase tracking-widest text-primary/80">{t("header.badge")}</span>
+    <section id="testimonials" className="space-y-8">
+      <div className="space-y-3 text-center">
+        <span className="text-xs font-semibold uppercase tracking-[0.4em] text-primary/70">{t("header.badge")}</span>
         <h2 className="text-3xl font-display font-bold sm:text-4xl">{t("testimonials.title")}</h2>
         <p className="mx-auto max-w-2xl text-sm text-muted-foreground">{t("testimonials.subtitle")}</p>
       </div>
@@ -29,14 +29,14 @@ export const TestimonialsSection = () => {
         {testimonials.map((testimonial, index) => (
           <figure
             key={testimonial.key}
-            className="relative h-full rounded-3xl border border-border/70 bg-card/80 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg animate-fade-in-up"
-            style={{ animationDelay: `${index * 0.12}s` }}
+            className="group relative h-full overflow-hidden rounded-3xl border border-border/60 bg-card/90 p-8 text-left shadow-md transition duration-300 hover:-translate-y-1.5 hover:border-primary/40 hover:shadow-glow"
+            style={{ animationDelay: `${index * 0.1}s` }}
           >
-            <Quote className="absolute right-6 top-6 h-10 w-10 text-primary/20" />
+            <Quote className="absolute right-6 top-6 h-10 w-10 text-primary/20 transition group-hover:text-primary/40" />
             <blockquote className="text-sm text-muted-foreground">{testimonial.quote}</blockquote>
-            <figcaption className="mt-6">
-              <p className="font-semibold">{testimonial.name}</p>
-              <p className="text-xs uppercase tracking-widest text-primary/70">{testimonial.role}</p>
+            <figcaption className="mt-8">
+              <p className="font-semibold text-foreground">{testimonial.name}</p>
+              <p className="text-xs uppercase tracking-[0.3em] text-primary/70">{testimonial.role}</p>
             </figcaption>
           </figure>
         ))}

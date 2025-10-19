@@ -48,142 +48,142 @@
                    "greeting":  "Bem-vindo de volta"
                },
     "hero":  {
-                 "badge":  "Programa continuo em dias, não meses",
-                 "title":  "Desenha jornadas de nutrição e treino que os teus clientes adoram",
-                 "subtitle":  "A NutriFit AI combina um assistente persuasivo com insights em tempo real para acompanhares mais pessoas, entregares planos personalizados em minutos e manteres cada cliente no rumo certo.",
-                 "ctaPrimary":  "Começa a coachar com IA",
-                 "ctaSecondary":  "Conhece os planos",
-                 "benefitSecurity":  "Privacidade em primeiro lugar. GDPR, SSO e backups diários encriptados incluídos.",
-                 "benefitAutomation":  "De sincronizações Supabase a faturação Stripe — automação que escala com cada novo cliente.",
+                 "badge":  "Nutrição com IA que parece humana",
+                 "title":  "Entrega acompanhamento de saúde de alto toque em escala",
+                 "subtitle":  "O Smart Health Buddy combina protocolos baseados em evidências com um assistente que automatiza planos, check-ins e insights para te focares nos resultados.",
+                 "ctaPrimary":  "Lançar workspace gratuito",
+                 "ctaSecondary":  "Ver como funciona",
+                 "benefitSecurity":  "Segurança empresarial com GDPR, SSO e backups encriptados por padrão.",
+                 "benefitAutomation":  "Automatiza ajustes de planos, faturação e lembretes ligando Supabase, Stripe e wearables.",
                  "stats":  {
                                "plans":  {
-                                             "label":  "Planos personalizados",
+                                             "label":  "Planos adaptativos",
                                              "value":  "+500K",
-                                             "description":  "gerados com IA de nutriÃ§Ã£o"
+                                             "description":  "gerados com o Smart Health Buddy"
                                          },
                                "speed":  {
-                                             "label":  "Tempo mÃ©dio de resposta",
+                                             "label":  "Tempo de resposta",
                                              "value":  "4s",
-                                             "description":  "para recomendaÃ§Ãµes inteligentes"
+                                             "description":  "média para ajustes automáticos com IA"
                                          },
                                "satisfaction":  {
-                                                    "label":  "SatisfaÃ§Ã£o dos clientes",
+                                                    "label":  "Satisfação dos coaches",
                                                     "value":  "97%",
-                                                    "description":  "coaches e utilizadores finais"
+                                                    "description":  "relatada em 40 equipas"
                                                 }
                            },
-                 "highlight":  "Elimina o trabalho repetitivo. Lança programas inteligentes que se adaptam a cada métrica, mensagem e check-in sem aumentar a equipa."
+                 "highlight":  "Ficas no controlo enquanto a automação ajusta macros, treinos e lembretes a cada novo dado."
              },
     "features":  {
-                     "title":  "Tudo o que a tua equipa precisa num único hub",
-                     "subtitle":  "Automatiza tarefas repetitivas, encanta clientes com planos adaptativos e mantém métricas, mensagens e insights sempre disponíveis.",
+                     "title":  "Um sistema operativo completo para equipas de nutrição",
+                     "subtitle":  "Desenha, entrega e evolui jornadas personalizadas com automação que mantém a tua marca no centro.",
                      "cards":  {
                                    "adaptive":  {
-                                                    "title":  "Motor de nutrição adaptativa",
-                                                    "description":  "Gera menus semanais que respeitam preferências, alergias e macros — ajusta tudo com um clique."
+                                                    "title":  "Motor de nutrição dinâmico",
+                                                    "description":  "Regista objetivos, alergias e preferências; o Smart Health Buddy equilibra macros automaticamente e sugere trocas na hora."
                                                 },
                                    "workout":  {
-                                                   "title":  "Arquiteto inteligente de treino",
-                                                   "description":  "Desenha micro e macro ciclos progressivos equilibrando força, recuperação e mobilidade."
+                                                   "title":  "Inteligência de treino",
+                                                   "description":  "Constrói treinos progressivos que respeitam recuperação, prontidão e equipamento sem folhas de cálculo."
                                                },
                                    "vision":  {
-                                                  "title":  "Análise instantânea por visão computacional",
-                                                  "description":  "Fotografa refeições ou rótulos e recebe macros inteligentes, sugestões de porção e alertas de compliance."
+                                                  "title":  "Contexto unificado do cliente",
+                                                  "description":  "Biometrias, histórico de conversas e ajustes vivem na mesma linha temporal para conversas sempre relevantes."
                                               },
                                    "progress":  {
-                                                    "title":  "Inteligência centralizada de progresso",
-                                                    "description":  "Acompanha métricas, fotos e notas num único hub, pronto para relatórios e check-ins."
+                                                    "title":  "Analytics de resultados",
+                                                    "description":  "Monitora aderência, antecipa riscos e compara coortes com dashboards pensados para saúde."
                                                 }
                                }
                  },
     "workflow":  {
-                     "title":  "Lança. Assiste. Adapta.",
-                     "subtitle":  "Guia clientes do onboarding ao resultado contínuo com workflows de IA que aprendem a cada check-in.",
+                     "title":  "Como o Smart Health Buddy entra na tua rotina",
+                     "subtitle":  "Da captação à retenção, automatiza as entregas mantendo especialistas no comando.",
                      "steps":  {
                                    "one":  {
-                                               "title":  "Onboarding em minutos",
-                                               "description":  "Importa histórico, objetivos e restrições com formulários inteligentes e deixa o assistente mapear os próximos passos."
+                                               "title":  "Recolhe dados uma vez",
+                                               "description":  "Importa perfis, objetivos e biometria de formulários ou diretamente do Supabase em minutos."
                                            },
                                    "two":  {
-                                               "title":  "IA cria o primeiro programa",
-                                               "description":  "Define objetivos e restrições e a NutriFit entrega planos de refeição e treino prontos a partilhar."
+                                               "title":  "Lança planos guiados",
+                                               "description":  "O assistente gera nutrição, treino e hábitos no teu tom para reveres e aprovares."
                                            },
                                    "three":  {
-                                                 "title":  "Feedback contínuo",
-                                                 "description":  "O chatbot recolhe hábitos diários, sinaliza riscos e sugere ajustes para te manter à frente das necessidades dos clientes."
+                                                 "title":  "Atende com alertas inteligentes",
+                                                 "description":  "Antecipas check-ins com resumos de IA, alertas de fadiga e ajustes de macros prontos a enviar."
                                              }
                                }
                  },
     "metrics":  {
-                    "title":  "Escala com segurança",
+                    "title":  "Feito para compliance, escala e velocidade",
                     "cards":  {
                                   "nocode":  {
-                                                 "title":  "Setup sem cÃ³digo",
-                                                 "description":  "Liga Supabase, Stripe, wearables e muito mais em minutos — sem desenvolvimento extra."
+                                                 "title":  "Configuração sem código",
+                                                 "description":  "Liga Supabase, Stripe, Zapier e wearables com templates guiados, sem desenvolvimento extra."
                                              },
                                   "security":  {
-                                                   "title":  "SeguranÃ§a \u0026 compliance",
-                                                   "description":  "Encriptação nível bancário, logs auditáveis e processos GDPR-first protegem todos os dados."
+                                                   "title":  "Segurança em primeiro lugar",
+                                                   "description":  "Infraestrutura single-tenant, trilhas de auditoria e encriptação ao nível de saúde."
                                                },
                                   "scale":  {
-                                                "title":  "Escala sem limites",
-                                                "description":  "Infraestrutura serverless pronta para crescer de 10 para 10.000 membros sem interrupções."
+                                                "title":  "Escala conforme a procura",
+                                                "description":  "Arquitetura serverless acompanha de 10 a 10 000 membros sem interrupções."
                                             }
                               }
                 },
     "testimonials":  {
-                         "title":  "Profissionais de saÃºde que confiam",
-                         "subtitle":  "Feedback de coaches, nutricionistas e fundadores que usam a NutriFit AI.",
+                         "title":  "Experiências premium, menos trabalho manual",
+                         "subtitle":  "Coaches, nutricionistas e fundadores usam o Smart Health Buddy para escalar atendimento sem aumentar custos fixos.",
                          "items":  {
                                        "ana":  {
                                                    "name":  "Ana Marques",
                                                    "role":  "Nutricionista clÃ­nica",
-                                                   "quote":  "A NutriFit AI libertou horas de planeamento repetitivo para eu focar-me em ouvir os meus clientes e elevar o apoio humano."
+                                                   "quote":  "O Smart Health Buddy libertou 80% do meu tempo de planeamento; agora passo as sessões a coachar em vez de editar folhas de cálculo."
                                                },
                                        "joao":  {
                                                     "name":  "JoÃ£o Duarte",
                                                     "role":  "Head Coach, BOX 21",
-                                                    "quote":  "As sugestÃµes de treino mantÃªm-se consistentes e ganho visibilidade sobre fadiga antes das lesÃµes aparecerem."
+                                                    "quote":  "O assistente mantém a programação consistente e avisa sobre fadiga antes dos atletas sentirem."
                                                 },
                                        "beatriz":  {
                                                        "name":  "Beatriz GonÃ§alves",
                                                        "role":  "Fundadora, MealPreps.pt",
-                                                       "quote":  "LanÃ§Ã¡mos um produto digital em semanas. O chatbot torna a experiÃªncia divertida e melhora a retenÃ§Ã£o todos os meses."
+                                                       "quote":  "Lançámos um serviço premium online em semanas. Os clientes adoram os check-ins com IA e a retenção sobe todos os meses."
                                                    }
                                    }
                      },
     "faq":  {
-                "title":  "Perguntas frequentes",
-                "subtitle":  "Mantemos uma base de conhecimento atualizada. Fala connosco se a tua questÃ£o nÃ£o estiver aqui.",
+                "title":  "Lança com confiança",
+                "subtitle":  "Implementação, segurança e operações explicadas para equipas de nutrição e fitness.",
                 "items":  {
                               "replace":  {
-                                              "question":  "A IA substitui profissionais de saÃºde?",
-                                              "answer":  "NÃ£o. A NutriFit AI automatiza trabalho repetitivo e sugere opÃ§Ãµes mas mantÃ©m os especialistas no controlo de cada decisÃ£o."
+                                              "question":  "O assistente substitui profissionais de saúde?",
+                                              "answer":  "Não. O Smart Health Buddy automatiza tarefas repetitivas e sugere opções, mas as decisões finais continuam com a tua equipa."
                                           },
                               "macros":  {
                                              "question":  "Como sÃ£o calculados os macros?",
-                                             "answer":  "Combinamos protocolos validados (Mifflin-St Jeor, Harris-Benedict) com o feedback e biometria mais recentes."
+                                             "answer":  "Combinamos protocolos validados (Mifflin-St Jeor, Harris-Benedict) com feedback dos clientes e biometria em tempo real."
                                          },
                               "branding":  {
                                                "question":  "Posso personalizar o branding?",
-                                               "answer":  "Sim. Ajusta logÃ³tipo, cores, tipografia e domÃ­nios personalizados para alinhar com a tua marca."
+                                               "answer":  "Sim. Ajusta logótipo, cores, tipografia e domínios personalizados para que a experiência reflita a tua marca."
                                            },
                               "mobile":  {
                                              "question":  "Existe app mÃ³vel dedicada?",
-                                             "answer":  "As apps nativas iOS e Android estÃ£o em beta. A experiÃªncia web Ã© responsiva e funciona offline entretanto."
+                                             "answer":  "As apps nativas para iOS e Android estão em beta. Até lá, a versão web é responsiva e funciona offline."
                                          }
                           }
             },
     "cta":  {
                 "title":  "Dá a cada cliente uma experiência premium",
-                "subtitle":  "Ativa o teu workspace NutriFit AI, convida os primeiros clientes e vê a retenção subir enquanto o tempo administrativo desce.",
+                "subtitle":  "Ativa o teu workspace Smart Health Buddy, convida os primeiros clientes e vê a retenção crescer enquanto o tempo administrativo cai.",
                 "primary":  "Lançar workspace gratuito",
-                "secondary":  "Marcar call estratégica"
+                "secondary":  "Agendar call estratégica"
             },
     "pricing":  {
                     "badge":  "Planos transparentes",
-                    "title":  "Planos para cada fase",
-                    "subtitle":  "Escolhe o plano que cresce com o teu negÃ³cio. Todos incluem chatbot, planos inteligentes e integraÃ§Ãµes.",
+                    "title":  "Planos que crescem com o teu negócio",
+                    "subtitle":  "Escolhe o plano que acompanha o tamanho da equipa. Todos incluem o assistente, planos inteligentes e integrações.",
                     "billing":  {
                                     "monthly":  "Mensal",
                                     "yearly":  "Anual",
@@ -194,21 +194,21 @@
                                                "title":  "Free",
                                                "price":  "0 â‚¬",
                                                "period":  "mÃªs",
-                                               "description":  "Valida a NutriFit AI sem compromisso.",
+                                               "description":  "Valida o Smart Health Buddy com clientes piloto e automações essenciais.",
                                                "button":  "ComeÃ§ar grÃ¡tis"
                                            },
                                   "pro":  {
                                               "title":  "Pro",
                                               "price":  "9,99 â‚¬",
                                               "period":  "mÃªs",
-                                              "description":  "Ideal para nutricionistas e PTs com carteiras ativas.",
+                                              "description":  "Escala atendimento personalizado com automações, branding e lugares adicionais.",
                                               "button":  "Escolher plano Pro"
                                           },
                                   "elite":  {
                                                 "title":  "Elite",
                                                 "price":  "19,99 â‚¬",
                                                 "period":  "mÃªs",
-                                                "description":  "Para equipas e ginásios que precisam de automação total e consultoria dedicada.",
+                                                "description":  "Implementação enterprise com controlos avançados, onboarding dedicado e suporte premium.",
                                                 "button":  "Falar com vendas"
                                             }
                               },
