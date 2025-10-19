@@ -52,8 +52,14 @@ export const AnimatedNumber = ({
   const ref = useRef<HTMLSpanElement | null>(null);
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
     const element = ref.current;
     if (!element || numeric === null) return;
+
+    if (!("IntersectionObserver" in window)) {
+      setHasAnimated(true);
+      return;
+    }
 
     const observer = new IntersectionObserver(
       (entries) => {
