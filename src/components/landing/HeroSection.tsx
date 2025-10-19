@@ -20,20 +20,21 @@ export const HeroSection = () => {
   );
 
   return (
-    <section className="relative overflow-hidden rounded-3xl border border-border/60 bg-gradient-to-br from-primary/5 via-background to-background px-6 py-16 shadow-glow-strong">
-      <div className="pointer-events-none absolute -left-20 top-10 hidden h-60 w-60 animate-float-slow rounded-full bg-primary/10 blur-3xl lg:block" />
-      <div className="pointer-events-none absolute bottom-0 right-0 h-64 w-64 animate-pulse-soft rounded-full bg-primary/5 blur-3xl" />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(16,185,129,0.18),transparent_60%)]" />
+    <section className="relative overflow-hidden rounded-3xl border border-border/60 bg-gradient-to-br from-primary/10 via-background to-background px-6 py-20 shadow-glow-strong">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(16,185,129,0.12),transparent_65%)]" />
+      <div className="pointer-events-none absolute -left-24 top-12 hidden h-64 w-64 animate-float-slow rounded-full bg-primary/20 blur-3xl lg:block" />
+      <div className="pointer-events-none absolute bottom-10 right-10 h-56 w-56 animate-pulse-soft rounded-full bg-primary/10 blur-3xl" />
+      <div className="pointer-events-none absolute bottom-0 left-1/2 hidden h-[220px] w-[220px] -translate-x-1/2 animate-float-slow rounded-full bg-primary/15 blur-2xl md:block" style={{ animationDelay: "1.2s" }} />
 
-      <div className="relative z-10 mx-auto flex max-w-6xl flex-col gap-12 lg:flex-row lg:items-center lg:gap-20">
+      <div className="relative z-10 mx-auto flex max-w-6xl flex-col gap-14 lg:flex-row lg:items-center lg:gap-24">
         <div className="flex-1 space-y-8">
-          <span className="inline-flex animate-fade-in items-center gap-2 rounded-full border border-primary/40 bg-background/80 px-4 py-1 text-sm text-primary shadow-sm">
+          <span className="inline-flex animate-fade-in items-center gap-2 rounded-full border border-primary/40 bg-background/90 px-5 py-2 text-sm text-primary shadow-sm">
             <Sparkles className="h-4 w-4" />
             {t("hero.badge")}
           </span>
 
           <div className="space-y-4">
-            <h1 className="animate-slide-up text-4xl font-display font-bold tracking-tight sm:text-5xl lg:text-6xl">
+            <h1 className="animate-slide-up text-4xl font-display font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
               {t("hero.title")}
             </h1>
             <p className="max-w-2xl text-lg text-muted-foreground">{t("hero.subtitle")}</p>
@@ -80,12 +81,12 @@ export const HeroSection = () => {
             {stats.map((stat, index) => (
               <div
                 key={stat.key}
-                className="animate-float-slow rounded-xl border border-primary/10 bg-background/70 p-4 text-center shadow-sm"
+                className="animate-float-slow rounded-xl border border-primary/10 bg-background/85 p-6 text-center shadow-sm"
                 style={{ animationDelay: `${index * 0.3}s` }}
               >
-                <p className="text-2xl font-display font-semibold text-primary">{stat.value}</p>
-                <p className="mt-1 text-xs uppercase tracking-wider text-muted-foreground">{stat.label}</p>
-                <p className="mt-2 text-xs text-muted-foreground/80">{stat.description}</p>
+                <p className="text-3xl font-display font-semibold text-primary">{stat.value}</p>
+                <p className="mt-1 text-xs uppercase tracking-widest text-muted-foreground">{stat.label}</p>
+                <p className="mt-3 text-xs text-muted-foreground/80">{stat.description}</p>
               </div>
             ))}
           </div>
