@@ -4,7 +4,6 @@ import { HERO_STATS } from "@/lib/content";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Activity, Play, ShieldCheck, Sparkles, Zap } from "lucide-react";
-import { AnimatedNumber } from "@/components/landing/AnimatedNumber";
 
 export const HeroSection = () => {
   const { t } = useTranslation();
@@ -85,7 +84,7 @@ export const HeroSection = () => {
                 className="animate-float-slow rounded-xl border border-primary/10 bg-background/85 p-6 text-center shadow-sm"
                 style={{ animationDelay: `${index * 0.3}s` }}
               >
-                <AnimatedNumber value={stat.value} className="block text-3xl font-display font-semibold text-primary" />
+                <span className="block text-3xl font-display font-semibold text-primary">{stat.value}</span>
                 <p className="mt-1 text-xs uppercase tracking-widest text-muted-foreground">{stat.label}</p>
                 <p className="mt-3 text-xs text-muted-foreground/80">{stat.description}</p>
               </div>
