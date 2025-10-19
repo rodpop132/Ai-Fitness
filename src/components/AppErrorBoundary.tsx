@@ -7,19 +7,19 @@ interface AppErrorBoundaryProps {
 interface AppErrorBoundaryState {
   hasError: boolean;
   message?: string;
+  stack?: string;
 }
 
 export class AppErrorBoundary extends Component<AppErrorBoundaryProps, AppErrorBoundaryState> {
-  state: AppErrorBoundaryState = {
-    hasError: false,
-  };
+  state: AppErrorBoundaryState = { hasError: false };
 
   static getDerivedStateFromError(error: Error): AppErrorBoundaryState {
-    return { hasError: true, message: error?.message ?? "Unexpected application error" };
+    return { hasError: true, message: error?.message ?? "Unexpected application error", stack: error?.stack };
   }
 
   componentDidCatch(error: Error, info: ErrorInfo) {
     console.error("Application error boundary captured:", error, info);
+    this.setState({ stack: error?.stack ?? info.componentStack });
   }
 
   render() {
@@ -33,9 +33,18 @@ export class AppErrorBoundary extends Component<AppErrorBoundaryProps, AppErrorB
               message below.
             </p>
             {this.state.message && (
-              <code className="block rounded-md bg-card px-4 py-3 text-sm text-destructive shadow-sm">
-                {this.state.message}
-              </code>
+              <div className="space-y-2 rounded-md bg-card px-4 py-3 text-left text-sm text-destructive shadow-sm">
+                <div className="font-semibold">Message:</div>
+                <code className="block whitespace-pre-wrap">{this.state.message}</code>
+                {this.state.stack && (
+                  <>
+                    <div className="font-semibold text-foreground">Stack trace:</div>
+                    <code className="block max-h-64 overflow-y-auto whitespace-pre-wrap text-xs text-muted-foreground">
+                      {this.state.stack}
+                    </code>
+                  </>
+                )}
+              </div>
             )}
           </div>
         </div>
