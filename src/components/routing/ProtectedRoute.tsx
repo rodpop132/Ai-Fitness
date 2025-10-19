@@ -10,7 +10,11 @@ export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const location = useLocation();
 
   if (status === "loading" || status === "idle") {
-    return null;
+    return (
+      <div className="flex h-screen items-center justify-center bg-background text-muted-foreground">
+        A carregar sessão...
+      </div>
+    );
   }
 
   if (status !== "authenticated") {
@@ -19,4 +23,3 @@ export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
 
   return children;
 };
-
