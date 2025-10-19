@@ -26,7 +26,8 @@ export const MetricsSection = () => {
         return (
           <article
             key={metric.key}
-            className="rounded-3xl border border-border/70 bg-gradient-to-br from-background via-card/90 to-background p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+            className="animate-fade-in-up rounded-3xl border border-border/70 bg-gradient-to-br from-background via-card/90 to-background p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+            style={{ animationDelay: `${metric.index * 0.12}s` }}
           >
             <div className="flex items-center gap-3">
               <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/10 text-primary">

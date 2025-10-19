@@ -281,16 +281,16 @@
                                                   }
                                    },
                     "highlights":  {
-                                       "instant":  {
-                                                       "description":  "Upgrade oder Downgrade jederzeit mit anteiliger Abrechnung. Keine versteckten Gebühren.",
-                                                       "title":  "Sofortiges Upgrade"
-                                                   },
                                        "security":  {
                                                         "description":  "Alle Tarife enthalten Verschlüsselung, tägliche Backups und DSGVO-konforme Prozesse.",
                                                         "title":  "Sicherheit \u0026 Compliance"
                                                     },
+                                       "instant":  {
+                                                       "description":  "Upgrade oder Downgrade jederzeit mit anteiliger Abrechnung. Keine versteckten Gebühren.",
+                                                       "title":  "Sofortiges Upgrade"
+                                                   },
                                        "support":  {
-                                                       "description":  "Sprich mit Ernährungs- und Fitness-Expert:innen, um Umsetzung und Anpassung zu beschleunigen.",
+                                                       "description":  "Sprich mit Ernährungs- und Fitness-Expert:innen, um Umsetzung und Personalisierung zu beschleunigen.",
                                                        "title":  "Menschlicher Support"
                                                    }
                                    }

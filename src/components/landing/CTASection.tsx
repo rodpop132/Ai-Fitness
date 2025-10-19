@@ -7,7 +7,7 @@ export const CTASection = () => {
   const { t } = useTranslation();
 
   return (
-    <section className="relative overflow-hidden rounded-3xl border border-primary/40 bg-gradient-to-br from-primary/15 via-primary/10 to-background p-10 text-center shadow-glow">
+    <section className="relative overflow-hidden rounded-3xl border border-primary/40 bg-gradient-to-br from-primary/15 via-primary/10 to-background p-10 text-center shadow-glow animate-fade-in-up">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(16,185,129,0.25),transparent_60%)] opacity-80" />
       <div className="relative z-10 mx-auto max-w-3xl space-y-6">
         <h2 className="text-3xl font-display font-bold sm:text-4xl">{t("cta.title")}</h2>

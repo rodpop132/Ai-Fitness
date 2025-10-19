@@ -30,8 +30,8 @@ export const FeatureGrid = () => {
         {cards.map((feature, index) => (
           <article
             key={feature.key}
-            className="group h-full animate-slide-up rounded-3xl border border-border/70 bg-card/80 p-6 shadow-sm transition hover:-translate-y-2 hover:shadow-2xl"
-            style={{ animationDelay: `${index * 0.15}s` }}
+            className="group h-full animate-fade-in-up rounded-3xl border border-border/70 bg-card/80 p-6 shadow-sm transition hover:-translate-y-2 hover:shadow-2xl"
+            style={{ animationDelay: `${index * 0.12}s` }}
           >
             <span className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-2xl text-primary shadow-inner transition group-hover:scale-105 group-hover:bg-primary/20">
               {feature.icon}

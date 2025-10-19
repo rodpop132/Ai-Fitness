@@ -180,121 +180,6 @@
                 "primary":  "Avvia prova gratuita",
                 "secondary":  "Parla con le vendite"
             },
-    "pricing":  {
-                    "title":  "Piani per ogni fase",
-                    "subtitle":  "Scegli il piano che cresce con la tua attivitÃ . Tutti includono chatbot, piani intelligenti e integrazioni.",
-                    "billing":  {
-                                    "monthly":  "Mensile",
-                                    "yearly":  "Annuale",
-                                    "save":  "Risparmia fino al 25%"
-                                },
-                    "cards":  {
-                                  "free":  {
-                                               "title":  "Free",
-                                               "price":  "0 â‚¬",
-                                               "period":  "mese",
-                                               "description":  "Valida NutriFit AI senza impegno.",
-                                               "button":  "Inizia gratis"
-                                           },
-                                  "pro":  {
-                                              "title":  "Pro",
-                                              "price":  "9,99 â‚¬",
-                                              "period":  "mese",
-                                              "description":  "Ideale per nutrizionisti e personal trainer con clienti attivi.",
-                                              "button":  "Scegli piano Pro"
-                                          },
-                                  "elite":  {
-                                                "title":  "Elite",
-                                                "price":  "19,99 â‚¬",
-                                                "period":  "mese",
-                                                "description":  "Per studi e palestre che richiedono automazione completa e consulenza dedicata.",
-                                                "button":  "Contatta vendite"
-                                            }
-                              },
-                    "features":  {
-                                     "free":  [
-                                                  "10 messaggi IA al giorno",
-                                                  "3 analisi di immagini al giorno",
-                                                  "Storico di 7 giorni",
-                                                  "Esportazione CSV"
-                                              ],
-                                     "pro":  [
-                                                 "200 messaggi al giorno",
-                                                 "30 analisi di immagini al giorno",
-                                                 "Piani PDF premium",
-                                                 "Storico illimitato",
-                                                 "Integrazione wearable",
-                                                 "Supporto prioritario"
-                                             ],
-                                     "elite":  [
-                                                   "Messaggi illimitati",
-                                                   "Analisi di immagini illimitate",
-                                                   "Automazione avanzata dei macro",
-                                                   "Cicli intelligenti di macro",
-                                                   "Consulenza mensile 1:1",
-                                                   "Accesso anticipato alle nuove funzioni"
-                                               ]
-                                 },
-                    "comparison":  {
-                                       "title":  "Confronto funzionalitÃ ",
-                                       "rows":  {
-                                                    "messages":  "Messaggi IA giornalieri",
-                                                    "vision":  "Analisi immagini giornaliere",
-                                                    "pdf":  "Esportazione piani PDF",
-                                                    "history":  "Storico",
-                                                    "wearables":  "Integrazione wearable",
-                                                    "consulting":  "Consulenza mensile",
-                                                    "featureHeader":  "Funzionalità"
-                                                },
-                                       "values":  {
-                                                      "messages":  [
-                                                                       "10",
-                                                                       "200",
-                                                                       "Illimitati"
-                                                                   ],
-                                                      "vision":  [
-                                                                     "3",
-                                                                     "30",
-                                                                     "Illimitati"
-                                                                 ],
-                                                      "pdf":  [
-                                                                  "â€”",
-                                                                  "SÃ¬",
-                                                                  "SÃ¬"
-                                                              ],
-                                                      "history":  [
-                                                                      "7 giorni",
-                                                                      "Illimitato",
-                                                                      "Illimitato"
-                                                                  ],
-                                                      "wearables":  [
-                                                                        "â€”",
-                                                                        "SÃ¬",
-                                                                        "Avanzata inclusa"
-                                                                    ],
-                                                      "consulting":  [
-                                                                         "â€”",
-                                                                         "â€”",
-                                                                         "SÃ¬"
-                                                                     ]
-                                                  }
-                                   },
-                    "badge":  "Prezzi trasparenti",
-                    "highlights":  {
-                                       "instant":  {
-                                                       "description":  "Puoi passare di piano in qualsiasi momento con fatturazione proporzionale. Nessun costo nascosto.",
-                                                       "title":  "Upgrade immediato"
-                                                   },
-                                       "security":  {
-                                                        "description":  "Tutti i piani includono crittografia, backup giornalieri e processi allineati al GDPR.",
-                                                        "title":  "Sicurezza e compliance"
-                                                    },
-                                       "support":  {
-                                                       "description":  "Parla con specialisti di nutrizione e fitness per accelerare implementazione e personalizzazione.",
-                                                       "title":  "Supporto umano"
-                                                   }
-                                   }
-                },
     "auth":  {
                  "login":  {
                                "title":  "Accedi",
@@ -450,5 +335,120 @@
                      "title":  "Pagina non trovata",
                      "subtitle":  "La pagina richiesta Ã¨ stata spostata o non esiste piÃ¹.",
                      "home":  "Torna alla home"
-                 }
+                 },
+    "pricing":  {
+                    "title":  "Piani per ogni fase",
+                    "subtitle":  "Scegli il piano che cresce con la tua attivitÃ . Tutti includono chatbot, piani intelligenti e integrazioni.",
+                    "billing":  {
+                                    "monthly":  "Mensile",
+                                    "yearly":  "Annuale",
+                                    "save":  "Risparmia fino al 25%"
+                                },
+                    "cards":  {
+                                  "free":  {
+                                               "title":  "Free",
+                                               "price":  "0 â‚¬",
+                                               "period":  "mese",
+                                               "description":  "Valida NutriFit AI senza impegno.",
+                                               "button":  "Inizia gratis"
+                                           },
+                                  "pro":  {
+                                              "title":  "Pro",
+                                              "price":  "9,99 â‚¬",
+                                              "period":  "mese",
+                                              "description":  "Ideale per nutrizionisti e personal trainer con clienti attivi.",
+                                              "button":  "Scegli piano Pro"
+                                          },
+                                  "elite":  {
+                                                "title":  "Elite",
+                                                "price":  "19,99 â‚¬",
+                                                "period":  "mese",
+                                                "description":  "Per studi e palestre che richiedono automazione completa e consulenza dedicata.",
+                                                "button":  "Contatta vendite"
+                                            }
+                              },
+                    "features":  {
+                                     "free":  [
+                                                  "10 messaggi IA al giorno",
+                                                  "3 analisi di immagini al giorno",
+                                                  "Storico di 7 giorni",
+                                                  "Esportazione CSV"
+                                              ],
+                                     "pro":  [
+                                                 "200 messaggi al giorno",
+                                                 "30 analisi di immagini al giorno",
+                                                 "Piani PDF premium",
+                                                 "Storico illimitato",
+                                                 "Integrazione wearable",
+                                                 "Supporto prioritario"
+                                             ],
+                                     "elite":  [
+                                                   "Messaggi illimitati",
+                                                   "Analisi di immagini illimitate",
+                                                   "Automazione avanzata dei macro",
+                                                   "Cicli intelligenti di macro",
+                                                   "Consulenza mensile 1:1",
+                                                   "Accesso anticipato alle nuove funzioni"
+                                               ]
+                                 },
+                    "comparison":  {
+                                       "title":  "Confronto funzionalitÃ ",
+                                       "rows":  {
+                                                    "messages":  "Messaggi IA giornalieri",
+                                                    "vision":  "Analisi immagini giornaliere",
+                                                    "pdf":  "Esportazione piani PDF",
+                                                    "history":  "Storico",
+                                                    "wearables":  "Integrazione wearable",
+                                                    "consulting":  "Consulenza mensile",
+                                                    "featureHeader":  "Funzionalità"
+                                                },
+                                       "values":  {
+                                                      "messages":  [
+                                                                       "10",
+                                                                       "200",
+                                                                       "Illimitati"
+                                                                   ],
+                                                      "vision":  [
+                                                                     "3",
+                                                                     "30",
+                                                                     "Illimitati"
+                                                                 ],
+                                                      "pdf":  [
+                                                                  "â€”",
+                                                                  "SÃ¬",
+                                                                  "SÃ¬"
+                                                              ],
+                                                      "history":  [
+                                                                      "7 giorni",
+                                                                      "Illimitato",
+                                                                      "Illimitato"
+                                                                  ],
+                                                      "wearables":  [
+                                                                        "â€”",
+                                                                        "SÃ¬",
+                                                                        "Avanzata inclusa"
+                                                                    ],
+                                                      "consulting":  [
+                                                                         "â€”",
+                                                                         "â€”",
+                                                                         "SÃ¬"
+                                                                     ]
+                                                  }
+                                   },
+                    "badge":  "Prezzi trasparenti",
+                    "highlights":  {
+                                       "instant":  {
+                                                       "description":  "Puoi passare di piano in qualsiasi momento con fatturazione proporzionale. Nessun costo nascosto.",
+                                                       "title":  "Upgrade immediato"
+                                                   },
+                                       "security":  {
+                                                        "description":  "Tutti i piani includono crittografia, backup giornalieri e processi allineati al GDPR.",
+                                                        "title":  "Sicurezza e compliance"
+                                                    },
+                                       "support":  {
+                                                       "description":  "Parla con specialisti di nutrizione e fitness per accelerare implementazione e personalizzazione.",
+                                                       "title":  "Supporto umano"
+                                                   }
+                                   }
+                }
 }

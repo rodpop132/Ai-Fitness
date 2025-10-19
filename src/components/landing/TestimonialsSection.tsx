@@ -29,7 +29,8 @@ export const TestimonialsSection = () => {
         {testimonials.map((testimonial) => (
           <figure
             key={testimonial.key}
-            className="relative h-full rounded-3xl border border-border/70 bg-card/80 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+            className="relative h-full rounded-3xl border border-border/70 bg-card/80 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg animate-fade-in-up"
+            style={{ animationDelay: `${index * 0.12}s` }}
           >
             <Quote className="absolute right-6 top-6 h-10 w-10 text-primary/20" />
             <blockquote className="text-sm text-muted-foreground">{testimonial.quote}</blockquote>

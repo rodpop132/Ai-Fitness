@@ -77,7 +77,7 @@ export const SiteHeader = () => {
         </Link>
 
         <nav className="hidden items-center gap-8 md:flex">
-          {status !== "authenticated" && navItems.map((item) => renderNavLink(item))}
+          {navItems.map((item) => renderNavLink(item))}
           {status === "authenticated" && user?.isAdmin && (
             <Link
               to="/admin"
@@ -95,6 +95,9 @@ export const SiteHeader = () => {
           <ThemeToggle />
           {status === "authenticated" ? (
             <>
+              <Button variant="outline" className="rounded-xl border-border/70" onClick={() => navigate("/dashboard")}>
+                {t("common.actions.dashboard")}
+              </Button>
               <Button className="rounded-xl bg-primary text-primary-foreground hover:shadow-glow" onClick={() => navigate("/chat")}>
                 {t("common.actions.chat")}
               </Button>
@@ -179,7 +182,7 @@ export const SiteHeader = () => {
             <SheetContent side="right" className="w-[280px]">
               <div className="mt-8 space-y-6">
                 <nav className="space-y-2">
-                  {status !== "authenticated" && navItems.map((item) => renderNavLink(item, true))}
+                  {navItems.map((item) => renderNavLink(item, true))}
                   {status === "authenticated" && user?.isAdmin && (
                     <Link
                       to="/admin"

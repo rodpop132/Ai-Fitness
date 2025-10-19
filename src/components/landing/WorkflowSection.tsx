@@ -33,7 +33,8 @@ export const WorkflowSection = () => {
         {steps.map((item, index) => (
           <div
             key={item.key}
-            className="relative overflow-hidden rounded-2xl border border-border/50 bg-background/80 p-6 transition duration-300 hover:-translate-y-1 hover:shadow-lg"
+            className="relative overflow-hidden rounded-2xl border border-border/50 bg-background/80 p-6 transition duration-300 hover:-translate-y-1 hover:shadow-lg animate-fade-in-up"
+            style={{ animationDelay: `${index * 0.12}s` }}
           >
             <span className="text-5xl font-display font-bold text-primary/20">{item.step}</span>
             <h3 className="mt-6 text-xl font-semibold">{item.title}</h3>
