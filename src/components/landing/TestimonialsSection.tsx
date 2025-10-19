@@ -26,7 +26,7 @@ export const TestimonialsSection = () => {
       </div>
 
       <div className="grid gap-6 md:grid-cols-3">
-        {testimonials.map((testimonial) => (
+        {testimonials.map((testimonial, index) => (
           <figure
             key={testimonial.key}
             className="relative h-full rounded-3xl border border-border/70 bg-card/80 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg animate-fade-in-up"
