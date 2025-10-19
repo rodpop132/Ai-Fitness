@@ -181,6 +181,7 @@
     "secondary": "Parler aux ventes"
   },
   "pricing": {
+    "badge": "Tarifs transparents",
     "title": "Des offres pour chaque étape",
     "subtitle": "Choisissez le forfait qui évolue avec votre activité. Tous incluent chatbot, plans intelligents et intégrations.",
     "billing": {
@@ -211,6 +212,20 @@
         "button": "Contacter les ventes"
       }
     },
+    "highlights": {
+      "instant": {
+        "title": "Upgrade instantané",
+        "description": "Changez de forfait à tout moment avec facturation au prorata. Aucun frais caché."
+      },
+      "security": {
+        "title": "Sécurité et conformité",
+        "description": "Tous les forfaits incluent chiffrement, sauvegardes quotidiennes et routines alignées RGPD."
+      },
+      "support": {
+        "title": "Support humain",
+        "description": "Échangez avec des spécialistes nutrition et fitness pour accélérer mise en place et personnalisation."
+      }
+    },
     "features": {
       "free": [
         "10 messages IA par jour",
@@ -238,6 +253,7 @@
     "comparison": {
       "title": "Comparatif des fonctionnalités",
       "rows": {
+        "featureHeader": "Fonctionnalité",
         "messages": "Messages IA quotidiens",
         "vision": "Analyses d'images quotidiennes",
         "pdf": "Exportation de plans PDF",

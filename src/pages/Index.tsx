@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { HeroSection } from "@/components/landing/HeroSection";
 import { FeatureGrid } from "@/components/landing/FeatureGrid";
 import { WorkflowSection } from "@/components/landing/WorkflowSection";
@@ -6,8 +8,22 @@ import { TestimonialsSection } from "@/components/landing/TestimonialsSection";
 import { PricingPreview } from "@/components/landing/PricingPreview";
 import { FAQSection } from "@/components/landing/FAQSection";
 import { CTASection } from "@/components/landing/CTASection";
+import { useAuth } from "@/hooks/useAuth";
 
 const Index = () => {
+  const { status } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (status === "authenticated") {
+      navigate("/dashboard", { replace: true });
+    }
+  }, [status, navigate]);
+
+  if (status === "authenticated") {
+    return null;
+  }
+
   return (
     <div className="container mx-auto space-y-24 px-6 pb-20 pt-10">
       <HeroSection />
@@ -23,4 +39,3 @@ const Index = () => {
 };
 
 export default Index;
-

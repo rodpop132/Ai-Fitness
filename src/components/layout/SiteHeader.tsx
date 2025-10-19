@@ -64,7 +64,7 @@ export const SiteHeader = () => {
   return (
     <header className="sticky top-0 z-40 w-full border-b border-border/60 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
       <div className="container mx-auto flex h-16 items-center justify-between gap-4">
-        <Link to="/" className="group flex items-center gap-2">
+        <Link to={status === "authenticated" ? "/dashboard" : "/"} className="group flex items-center gap-2">
           <span className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/15 text-primary transition-transform group-hover:rotate-6">
             <Activity className="h-5 w-5" />
           </span>
@@ -77,7 +77,7 @@ export const SiteHeader = () => {
         </Link>
 
         <nav className="hidden items-center gap-8 md:flex">
-          {navItems.map((item) => renderNavLink(item))}
+          {status !== "authenticated" && navItems.map((item) => renderNavLink(item))}
           {status === "authenticated" && user?.isAdmin && (
             <Link
               to="/admin"
@@ -179,7 +179,7 @@ export const SiteHeader = () => {
             <SheetContent side="right" className="w-[280px]">
               <div className="mt-8 space-y-6">
                 <nav className="space-y-2">
-                  {navItems.map((item) => renderNavLink(item, true))}
+                  {status !== "authenticated" && navItems.map((item) => renderNavLink(item, true))}
                   {status === "authenticated" && user?.isAdmin && (
                     <Link
                       to="/admin"

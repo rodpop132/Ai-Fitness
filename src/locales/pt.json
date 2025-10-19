@@ -181,6 +181,7 @@
     "secondary": "Falar com vendas"
   },
   "pricing": {
+    "badge": "Planos transparentes",
     "title": "Planos para cada fase",
     "subtitle": "Escolhe o plano que cresce com o teu negócio. Todos incluem chatbot, planos inteligentes e integrações.",
     "billing": {
@@ -211,6 +212,20 @@
         "button": "Falar com vendas"
       }
     },
+    "highlights": {
+      "instant": {
+        "title": "Upgrade instantâneo",
+        "description": "Faz upgrade ou downgrade a qualquer momento com faturação proporcional. Sem taxas escondidas."
+      },
+      "security": {
+        "title": "Segurança e compliance",
+        "description": "Todos os planos incluem encriptação, backups diários e rotinas alinhadas com RGPD."
+      },
+      "support": {
+        "title": "Suporte humano",
+        "description": "Fala com especialistas em nutrição e fitness para acelerar a implementação e personalização."
+      }
+    },
     "features": {
       "free": [
         "10 mensagens de IA por dia",
@@ -238,6 +253,7 @@
     "comparison": {
       "title": "Comparativo de funcionalidades",
       "rows": {
+        "featureHeader": "Funcionalidade",
         "messages": "Mensagens diárias com IA",
         "vision": "Análises de imagem diárias",
         "pdf": "Exportação de planos em PDF",

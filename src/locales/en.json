@@ -181,6 +181,7 @@
     "secondary": "Talk to sales"
   },
   "pricing": {
+    "badge": "Transparent pricing",
     "title": "Plans for every stage",
     "subtitle": "Choose the plan that grows with your practice. All tiers include chatbot access, smart plans and integrations.",
     "billing": {
@@ -211,6 +212,20 @@
         "button": "Talk to sales"
       }
     },
+    "highlights": {
+      "instant": {
+        "title": "Instant upgrade",
+        "description": "Upgrade or downgrade anytime with prorated billing. No hidden fees."
+      },
+      "security": {
+        "title": "Security & compliance",
+        "description": "All plans include encryption, daily backups and GDPR-aligned routines."
+      },
+      "support": {
+        "title": "Human support",
+        "description": "Talk to nutrition and fitness experts to accelerate implementation and customisation."
+      }
+    },
     "features": {
       "free": [
         "10 AI messages per day",
@@ -238,6 +253,7 @@
     "comparison": {
       "title": "Feature comparison",
       "rows": {
+        "featureHeader": "Feature",
         "messages": "Daily AI messages",
         "vision": "Daily image analyses",
         "pdf": "PDF plan exports",

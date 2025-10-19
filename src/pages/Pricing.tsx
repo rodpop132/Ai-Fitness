@@ -8,19 +8,43 @@ import { Check, Sparkles, ShieldCheck, Zap } from "lucide-react";
 
 type BillingCycle = "monthly" | "yearly";
 
-const PLAN_PRICES = {
-  Free: { monthly: "0", yearly: "0" },
-  Pro: { monthly: "9.99", yearly: "89.99" },
-  Elite: { monthly: "19.99", yearly: "179.99" },
+const PLAN_PRICES: Record<"free" | "pro" | "elite", Record<BillingCycle, string>> = {
+  free: { monthly: "0", yearly: "0" },
+  pro: { monthly: "9.99", yearly: "89.99" },
+  elite: { monthly: "19.99", yearly: "179.99" },
 };
 
-const COMPARISON_ROWS: Array<{ label: string; tiers: [string | boolean, string | boolean, string | boolean] }> = [
-  { label: "Mensagens diarias com IA", tiers: ["10", "200", "Ilimitadas"] },
-  { label: "Analises de imagem diarias", tiers: ["3", "30", "Ilimitadas"] },
-  { label: "Exportacao de planos em PDF", tiers: [false, true, true] },
-  { label: "Historico completo", tiers: ["7 dias", "Ilimitado", "Ilimitado"] },
-  { label: "Integracao com wearables", tiers: [false, true, "Incluso avancado"] },
-  { label: "Consultoria mensal", tiers: [false, false, true] },
+const PLAN_CONFIG = [
+  { tier: "free" as const, highlight: false },
+  { tier: "pro" as const, highlight: true },
+  { tier: "elite" as const, highlight: false },
+];
+
+const COMPARISON_ROWS = [
+  {
+    labelKey: "pricing.comparison.rows.messages",
+    tiers: ["pricing.comparison.values.messages.0", "pricing.comparison.values.messages.1", "pricing.comparison.values.messages.2"],
+  },
+  {
+    labelKey: "pricing.comparison.rows.vision",
+    tiers: ["pricing.comparison.values.vision.0", "pricing.comparison.values.vision.1", "pricing.comparison.values.vision.2"],
+  },
+  {
+    labelKey: "pricing.comparison.rows.pdf",
+    tiers: [false, true, true] as Array<string | boolean>,
+  },
+  {
+    labelKey: "pricing.comparison.rows.history",
+    tiers: ["pricing.comparison.values.history.0", "pricing.comparison.values.history.1", "pricing.comparison.values.history.2"],
+  },
+  {
+    labelKey: "pricing.comparison.rows.wearables",
+    tiers: [false, true, "pricing.comparison.values.wearables.2"] as Array<string | boolean>,
+  },
+  {
+    labelKey: "pricing.comparison.rows.consulting",
+    tiers: [false, false, true],
+  },
 ];
 
 const Pricing = () => {
@@ -28,33 +52,16 @@ const Pricing = () => {
   const [billingCycle, setBillingCycle] = useState<BillingCycle>("monthly");
 
   const plans = useMemo(
-    () => [
-      {
-        name: "Free",
-        price: PLAN_PRICES.Free[billingCycle],
-        period: billingCycle === "monthly" ? "mes" : "ano",
-        description: "Para validar o potencial da NutriFit AI sem compromisso.",
-        features: PRICING_FEATURES.free.map((key) => t(key)),
-        buttonText: "Comecar gratis",
-      },
-      {
-        name: "Pro",
-        price: PLAN_PRICES.Pro[billingCycle],
-        period: billingCycle === "monthly" ? "mes" : "ano",
-        description: "Perfeito para nutricionistas e personal trainers com carteiras ativas.",
-        features: PRICING_FEATURES.pro.map((key) => t(key)),
-        highlighted: true,
-        buttonText: "Escolher plano Pro",
-      },
-      {
-        name: "Elite",
-        price: PLAN_PRICES.Elite[billingCycle],
-        period: billingCycle === "monthly" ? "mes" : "ano",
-        description: "Para equipas e academias que querem automacao total e consultoria dedicada.",
-        features: PRICING_FEATURES.elite.map((key) => t(key)),
-        buttonText: "Falar com vendas",
-      },
-    ],
+    () =>
+      PLAN_CONFIG.map(({ tier, highlight }) => ({
+        name: t(`pricing.cards.${tier}.title`),
+        price: PLAN_PRICES[tier][billingCycle],
+        period: billingCycle === "monthly" ? t("pricing.billing.monthly") : t("pricing.billing.yearly"),
+        description: t(`pricing.cards.${tier}.description`),
+        features: PRICING_FEATURES[tier].map((key) => t(key)),
+        highlighted: highlight,
+        buttonText: t(`pricing.cards.${tier}.button`),
+      })),
     [billingCycle, t],
   );
 
@@ -63,14 +70,13 @@ const Pricing = () => {
       <div className="container mx-auto max-w-6xl space-y-16 px-6">
         <section className="text-center">
           <Badge variant="secondary" className="bg-primary/10 text-primary">
-            Precos transparentes
+            {t("pricing.badge")}
           </Badge>
           <h1 className="mt-6 text-4xl font-display font-bold sm:text-5xl">
-            Planos para cada fase do teu projeto
+            {t("pricing.title")}
           </h1>
           <p className="mx-auto mt-4 max-w-2xl text-base text-muted-foreground">
-            Escolhe o plano que acompanha o teu ritmo de crescimento. Todos incluem acesso ao chatbot, planos inteligentes e
-            integracoes com Supabase e Stripe.
+            {t("pricing.subtitle")}
           </p>
 
           <div className="mt-8 inline-flex items-center rounded-full border border-primary/30 bg-card/80 p-2 shadow-sm">
@@ -80,7 +86,7 @@ const Pricing = () => {
               className={`rounded-full ${billingCycle === "monthly" ? "gradient-ai text-white shadow-glow" : ""}`}
               onClick={() => setBillingCycle("monthly")}
             >
-              Mensal
+              {t("pricing.billing.monthly")}
             </Button>
             <Button
               size="sm"
@@ -88,7 +94,8 @@ const Pricing = () => {
               className={`rounded-full ${billingCycle === "yearly" ? "gradient-ai text-white shadow-glow" : ""}`}
               onClick={() => setBillingCycle("yearly")}
             >
-              Anual <span className="ml-2 text-xs text-accent">Poupa ate 25%</span>
+              {t("pricing.billing.yearly")}{" "}
+              <span className="ml-2 text-xs text-accent">{t("pricing.billing.save")}</span>
             </Button>
           </div>
         </section>
@@ -115,10 +122,8 @@ const Pricing = () => {
               <Sparkles className="h-5 w-5" />
             </span>
             <div>
-              <h3 className="text-lg font-semibold">Upgrade instantaneo</h3>
-              <p className="text-sm text-muted-foreground">
-                Faz upgrade ou downgrade a qualquer momento com faturacao proporcional. Sem taxas escondidas.
-              </p>
+              <h3 className="text-lg font-semibold">{t("pricing.highlights.instant.title")}</h3>
+              <p className="text-sm text-muted-foreground">{t("pricing.highlights.instant.description")}</p>
             </div>
           </div>
 
@@ -127,10 +132,8 @@ const Pricing = () => {
               <ShieldCheck className="h-5 w-5" />
             </span>
             <div>
-              <h3 className="text-lg font-semibold">Seguranca e compliance</h3>
-              <p className="text-sm text-muted-foreground">
-                Todos os planos incluem encriptacao, backups diarios e rotinas alinhadas com RGPD.
-              </p>
+              <h3 className="text-lg font-semibold">{t("pricing.highlights.security.title")}</h3>
+              <p className="text-sm text-muted-foreground">{t("pricing.highlights.security.description")}</p>
             </div>
           </div>
 
@@ -139,32 +142,32 @@ const Pricing = () => {
               <Zap className="h-5 w-5" />
             </span>
             <div>
-              <h3 className="text-lg font-semibold">Suporte humano</h3>
-              <p className="text-sm text-muted-foreground">
-                Fala com especialistas em nutricao e fitness para acelerar a implementacao e personalizacao.
-              </p>
+              <h3 className="text-lg font-semibold">{t("pricing.highlights.support.title")}</h3>
+              <p className="text-sm text-muted-foreground">{t("pricing.highlights.support.description")}</p>
             </div>
           </div>
         </section>
 
         <section className="space-y-6 rounded-3xl border border-border/60 bg-background/60 p-8 shadow-md">
-          <h2 className="text-2xl font-display font-bold text-center">Comparativo rapido de funcionalidades</h2>
+          <h2 className="text-2xl font-display font-bold text-center">{t("pricing.comparison.title")}</h2>
           <div className="overflow-hidden rounded-2xl border border-border/70">
             <table className="min-w-full divide-y divide-border/60 text-sm">
               <thead className="bg-card/70">
                 <tr>
-                  <th className="px-4 py-3 text-left font-semibold">Funcionalidade</th>
-                  <th className="px-4 py-3 text-center font-semibold">Free</th>
-                  <th className="px-4 py-3 text-center font-semibold">Pro</th>
-                  <th className="px-4 py-3 text-center font-semibold">Elite</th>
+                  <th className="px-4 py-3 text-left font-semibold">{t("pricing.comparison.rows.featureHeader")}</th>
+                  {plans.map((plan) => (
+                    <th key={`head-${plan.name}`} className="px-4 py-3 text-center font-semibold">
+                      {plan.name}
+                    </th>
+                  ))}
                 </tr>
               </thead>
               <tbody className="divide-y divide-border/40 bg-card/50">
                 {COMPARISON_ROWS.map((row) => (
-                  <tr key={row.label}>
-                    <td className="px-4 py-3 font-medium text-foreground">{row.label}</td>
+                  <tr key={row.labelKey}>
+                    <td className="px-4 py-3 font-medium text-foreground">{t(row.labelKey)}</td>
                     {row.tiers.map((tier, index) => (
-                      <td key={`${row.label}-${index}`} className="px-4 py-3 text-center text-muted-foreground">
+                      <td key={`${row.labelKey}-${index}`} className="px-4 py-3 text-center text-muted-foreground">
                         {typeof tier === "boolean" ? (
                           tier ? (
                             <Check className="mx-auto h-4 w-4 text-primary" />
@@ -172,7 +175,7 @@ const Pricing = () => {
                             <span>-</span>
                           )
                         ) : (
-                          tier
+                          t(tier)
                         )}
                       </td>
                     ))}
